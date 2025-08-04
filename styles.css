@@ -1,0 +1,274 @@
+:root {
+  /* Light mode colors */
+  --color-primary: #0d1b2a;
+  --color-secondary: #1b263b;
+  --color-accent: #415a77;
+  --color-muted: #778da9;
+  --color-light: #e0e1dd;
+  --color-background: #ffffff;
+  --color-surface: #f8f9fa;
+  --color-text: #0d1b2a;
+  --color-text-muted: #415a77;
+  --color-border: #e0e1dd;
+  --shadow: rgba(13, 27, 42, 0.1);
+  --shadow-hover: rgba(13, 27, 42, 0.2);
+  --card-color : white;
+  --add-task-color: #5467AE;
+  --main-area-bg: #6478C7;
+  --sidebar-bg: #E8E7E7;
+  --overlay-bg: white;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode colors */
+    --color-primary: #e0e1dd;
+    --color-secondary: #778da9;
+    --color-accent: #415a77;
+    --color-muted: #1b263b;
+    --color-light: #0d1b2a;
+    --color-background: #0d1b2a;
+    --color-surface: #1b263b;
+    --color-text: #e0e1dd;
+    --color-text-muted: #778da9;
+    --color-border: #415a77;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.5);
+    --card-color: #404346;
+    --add-task-color: #E8E7E7;
+    --main-area-bg: #1E1E1E;
+    --sidebar-bg: #2B2A28;
+    --overlay-bg: #323232;
+  }
+}
+
+html {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+/* button {
+  width: 150px;
+  padding: 10px;
+  margin: 10px;
+
+  font-size: 1rem;
+  background-color: rgb(60, 60, 242);
+  border-radius: 15px;
+  color: white;
+  border: none;
+} */
+.hide {
+  display: none;
+}
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.sidebarzz {
+  width: 25vw;
+  transition: transform 0.3s ease;
+  z-index: 2;
+  background-color: bisque;
+}
+.sidebar {
+  flex: 0 0 25vw;
+  transition: transform 0.3s ease, flex-basis 0.3s ease;
+  background: var(--sidebar-bg);
+}
+.sidebar.closed {
+  transform: translateX(-100%);
+  flex-basis: 0; /* collapse actual space taken */
+  overflow: hidden; /* optional */
+}
+
+.main {
+  flex: 1 1 auto;
+  transition: width 0.3s ease;
+  z-index: 1;
+  background: var(--main-area-bg);
+  padding: 2rem;
+ 
+}
+
+.overlay-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 25vw; /* Or any width you like */
+  height: 100%;
+  background: var(--overlay-bg);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+.overlay-panel.open {
+  transform: translateX(0);
+}
+.sidebar,
+.main,
+.overlay-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* fill vertical viewport */
+}
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* take remaining space */
+  overflow-y: auto; /* scroll if content is long */
+  padding: 2rem;
+  /* flex: 1 1 auto; 
+  overflow-y: auto;  */
+}
+.sidebar-bottom {
+  flex-shrink: 0; 
+  margin-top: auto;
+
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* take remaining space */
+  overflow-y: auto; /* scroll if content is long */
+}
+.main-bottom {
+  flex-shrink: 0; /* do not shrink */
+  /* optionally add background, padding, border */
+  margin-bottom: 2rem;
+}
+.task-list-title {
+ color: white;
+ font-size: 2rem;
+ font-weight: 700;
+ margin-top: 1rem;
+ margin-bottom: 2rem;
+}
+
+.todo {
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: white;
+  font-size: 1.25rem;
+  color: black;
+  border-radius: 10px;
+  padding: 20px;
+}
+.todo > .material-symbols-outlined {
+  font-size: 36px;
+  margin-right: 24px;
+}
+.overlay-content {
+  flex: 1 1 auto; /* take remaining space */
+  overflow-y: auto; /* scroll if content is long */
+}
+.overlay-bottom {
+  flex-shrink: 0; /* do not shrink */
+  /* optionally add background, padding, border */
+}
+.addtask {
+  display: flex;
+  align-items: center;
+  /* margin-left: 2rem;
+  margin-right: 2rem; */
+  margin-bottom: 1.5rem;
+  background: var(--add-task-color);
+  font-size: 24px;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+.addtask > .material-symbols-outlined {
+  font-size: 36px; 
+}
+.profile {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.profile > .avatar {
+  margin-right: 10px;
+}
+.profile .profile-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.addlist {
+  display: flex;
+  align-items: center;
+  /* margin-left: 2rem;
+  margin-right: 2rem; */
+  /* margin-bottom: .5rem; */
+  font-size: 1.25rem;
+  color: black;
+  border-radius: 10px;
+  /* padding: 20px; */
+}
+.addlist > .material-symbols-outlined {
+  font-size: 36px;
+  margin-right: 1rem;
+}
+.overlay-panel .overlay-bottom button#closenote {
+  background: transparent;  
+  border: none;             
+  color: rgb(127, 127, 127);                
+  padding: 10px 20px;       /* Create enough padding space around the text for easy clicking */
+  cursor: pointer;          /* Show pointer cursor on hover */
+  width: auto;              
+  height: auto;           
+}
+.overlay-panel .overlay-bottom button#closenote span.material-symbols-outlined.large-icon {
+  font-size: 36px; 
+}
+.main-content button#expand,
+.main-content button#contract
+{
+  background: transparent;  
+  border: none;   
+  width: 2rem;          
+  color: white;                
+  /* padding: 10px 20px;        */
+  cursor: pointer;          /* Show pointer cursor on hover */
+  /* width: auto;              
+  height: auto;    */
+}
+.main-content button#expand span.material-symbols-outlined.large-icon,
+.main-content button#contract span.material-symbols-outlined.large-icon
+{
+  font-size: 2.5rem;
+}
+
+.user-list{
+  display: grid;
+  grid-template-columns: 2.5rem 1fr 2.5rem;
+  align-items: center;
+  margin-bottom: .5rem;
+  /* background: white; */
+  font-size: 1.25rem;
+  color: black;
+  border-radius: 10px;
+  /* padding: 20px; */
+}
+.user-list.selected {
+  background-color: #a6a6a6;
+}
+.user-list span.material-symbols-outlined.large-icon{
+  font-size: 2rem;
+  color: #5467AE;
+}
+.user-list span.name{
+  font-size: 1.5 rem
+}
+.custom-hr {
+  border: none;          /* Removes the default border */
+  height: 3px;           /* Sets thickness */
+  background: #c2c2c1;   /* Sets color (use any hex, rgb, or named color) */
+  margin: 10px 0;        /* Adds space above and below the line */
+  border-radius: 1.5px;  
+  width: 100%;            /* Controls width (can use px, %, etc.) */
+  
+}
