@@ -20,19 +20,26 @@ export class ToDoItem {
   constructor(title) {
     this.#title = title;
     this.#id = crypto.randomUUID();
-    
-    // console.log(`in constructor this ToDoItem =
-    //     title:${this.#title}, 
-    //     id: ${this.#id},
-    //     due date: ${this.#dueDate},
-    //     important: ${this.#important},
-    //     done: ${this.#done},
-    //     myday: ${this.#myday},
-    //     note: ${this.#note},
-    //     subtasks: ${this.#subtasks}`
-    //   );
+  }
+  getTitle() {
+    return this.#title;
+  }
+  getId() {
+    return this.#id;
+  }
+  isImportant() {
+    return this.#important;
+  }
+  isDone() {
+    return this.#done;
   }
   toggleImportant() {
     this.#important = !this.#important;
+  }
+  getNote() {
+    return this.#note;
+  }
+  getSubtasks() {
+    return [...this.#subtasks];
   }
 }

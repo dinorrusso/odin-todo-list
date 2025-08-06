@@ -12,10 +12,10 @@
   --color-border: #e0e1dd;
   --shadow: rgba(13, 27, 42, 0.1);
   --shadow-hover: rgba(13, 27, 42, 0.2);
-  --card-color : white;
-  --add-task-color: #5467AE;
-  --main-area-bg: #6478C7;
-  --sidebar-bg: #E8E7E7;
+  --card-color: white;
+  --add-task-color: #5467ae;
+  --main-area-bg: #6478c7;
+  --sidebar-bg: #e8e7e7;
   --overlay-bg: white;
 }
 @media (prefers-color-scheme: dark) {
@@ -34,9 +34,9 @@
     --shadow: rgba(0, 0, 0, 0.3);
     --shadow-hover: rgba(0, 0, 0, 0.5);
     --card-color: #404346;
-    --add-task-color: #E8E7E7;
-    --main-area-bg: #1E1E1E;
-    --sidebar-bg: #2B2A28;
+    --add-task-color: #e8e7e7;
+    --main-area-bg: #1e1e1e;
+    --sidebar-bg: #2b2a28;
     --overlay-bg: #323232;
   }
 }
@@ -88,7 +88,6 @@ html {
   z-index: 1;
   background: var(--main-area-bg);
   padding: 2rem;
- 
 }
 
 .overlay-panel {
@@ -117,15 +116,13 @@ html {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto; /* take remaining space */
-  overflow-y: auto; /* scroll if content is long */
-  padding: 2rem;
+  /* overflow-y: auto;  */
   /* flex: 1 1 auto; 
   overflow-y: auto;  */
 }
 .sidebar-bottom {
-  flex-shrink: 0; 
+  flex-shrink: 0;
   margin-top: auto;
-
 }
 .main-content {
   display: flex;
@@ -139,11 +136,11 @@ html {
   margin-bottom: 2rem;
 }
 .task-list-title {
- color: white;
- font-size: 2rem;
- font-weight: 700;
- margin-top: 1rem;
- margin-bottom: 2rem;
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 .todo {
@@ -182,13 +179,14 @@ html {
   padding: 20px;
 }
 .addtask > .material-symbols-outlined {
-  font-size: 36px; 
+  font-size: 36px;
 }
 .profile {
   display: flex;
   align-items: center;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  padding-left: 1rem;
 }
 .profile > .avatar {
   margin-right: 10px;
@@ -200,75 +198,139 @@ html {
 .addlist {
   display: flex;
   align-items: center;
-  /* margin-left: 2rem;
-  margin-right: 2rem; */
-  /* margin-bottom: .5rem; */
+  padding-left: 1rem;
   font-size: 1.25rem;
   color: black;
   border-radius: 10px;
-  /* padding: 20px; */
 }
 .addlist > .material-symbols-outlined {
   font-size: 36px;
   margin-right: 1rem;
 }
 .overlay-panel .overlay-bottom button#closenote {
-  background: transparent;  
-  border: none;             
-  color: rgb(127, 127, 127);                
-  padding: 10px 20px;       /* Create enough padding space around the text for easy clicking */
-  cursor: pointer;          /* Show pointer cursor on hover */
-  width: auto;              
-  height: auto;           
+  background: transparent;
+  border: none;
+  color: rgb(127, 127, 127);
+  padding: 10px 20px; /* Create enough padding space around the text for easy clicking */
+  cursor: pointer; /* Show pointer cursor on hover */
+  width: auto;
+  height: auto;
 }
-.overlay-panel .overlay-bottom button#closenote span.material-symbols-outlined.large-icon {
-  font-size: 36px; 
+.overlay-panel
+  .overlay-bottom
+  button#closenote
+  span.material-symbols-outlined.large-icon {
+  font-size: 36px;
 }
 .main-content button#expand,
-.main-content button#contract
-{
-  background: transparent;  
-  border: none;   
-  width: 2rem;          
-  color: white;                
+.main-content button#contract {
+  background: transparent;
+  border: none;
+  width: 2rem;
+  color: white;
   /* padding: 10px 20px;        */
-  cursor: pointer;          /* Show pointer cursor on hover */
+  cursor: pointer; /* Show pointer cursor on hover */
   /* width: auto;              
   height: auto;    */
 }
 .main-content button#expand span.material-symbols-outlined.large-icon,
-.main-content button#contract span.material-symbols-outlined.large-icon
-{
+.main-content button#contract span.material-symbols-outlined.large-icon {
   font-size: 2.5rem;
 }
 
-.user-list{
+.user-list {
   display: grid;
-  grid-template-columns: 2.5rem 1fr 2.5rem;
+  padding: 5px;
+  grid-template-columns: 4rem 1fr 4rem;
   align-items: center;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   /* background: white; */
   font-size: 1.25rem;
   color: black;
-  border-radius: 10px;
-  /* padding: 20px; */
+}
+.user-list > :nth-child(1) {
+  justify-self: center; /* horizontally center content in 1st column */
+  align-self: center; /* vertically center content */
 }
 .user-list.selected {
   background-color: #a6a6a6;
 }
-.user-list span.material-symbols-outlined.large-icon{
+.user-list span.material-symbols-outlined.large-icon {
   font-size: 2rem;
-  color: #5467AE;
+  color: #5467ae;
 }
-.user-list span.name{
-  font-size: 1.5 rem
+.user-list span.name {
+  font-size: 1.5 rem;
 }
 .custom-hr {
-  border: none;          /* Removes the default border */
-  height: 3px;           /* Sets thickness */
-  background: #c2c2c1;   /* Sets color (use any hex, rgb, or named color) */
-  margin: 10px 0;        /* Adds space above and below the line */
-  border-radius: 1.5px;  
-  width: 100%;            /* Controls width (can use px, %, etc.) */
+  border: none;
+  height: 3px;
+  background: #c2c2c1;
+  margin: 10px 0;
+  border-radius: 1.5px;
+  margin-left: 1rem;
+  width: 90%;
+}
+.addlist {
+  cursor: pointer;
+}
+dialog {
+  border: none;                /* Remove default border */
+  border-radius: 8px;          /* Rounded corners */
+  padding: 20px 30px;          /* Space inside the dialog */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  width: 300px;                /* Fixed width */
+  max-width: 90vw;             /* Responsive on small screens */
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);  /* Semi-transparent dark overlay behind dialog */
+  backdrop-filter: blur(2px);       
+}
+
+dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+dialog input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline-offset: 2px;
+}
+
+dialog button {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #5467ae;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+dialog button:hover {
+  background-color: #5467ae;
+}
+
+dialog button.cancel-btn {
+  background-color: #e74c3c;
+}
+
+dialog button.cancel-btn:hover {
+  background-color: #c0392b;
+}
+.task-list-title[contenteditable="true"]:focus {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  outline: none; /* Removes the default focus outline */
+  filter: invert(100%);
+  /* background: #234460; */
   
 }

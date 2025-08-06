@@ -26,15 +26,20 @@
           </span>
         </div>
         <div class="predefined-lists-container">
-          <div class="user-list selected">
-            <span class="material-symbols-outlined large-icon">inventory</span>
-            <span class="name">Tasks</span>
-            <span class="count">10</span>
-          </div>
+          <!-- will contain predefined list divs e.g.,
+           <div class="user-list" id="ca7815ec-18cb-4503-980e-cc6b6fc16fa8">
+            <span class="material-symbols-outlined large-icon" style="color: rgb(250, 170, 21);">sunny</span>
+            <span class="name">My Day</span>
+            <span class="count"></span>
+          </div> -->
         </div>
         <hr class="custom-hr">
         <div class="user-lists-container">
-          
+          <!-- will contain user-list divs e.g., 
+           <div class="user-list" id="74554f10-a799-4620-a11d-40c40f883dbe">
+            <span class="material-symbols-outlined large-icon">list</span>
+            <span class="name">NewList0</span><span class="count"></span>
+          </div> -->
         </div>
         <div class="sidebar-bottom">
             <div class="addlist">
@@ -50,17 +55,11 @@
       <!-- 'buttons' to expand/collapse main area -->
       <button id="expand"><span class="material-symbols-outlined large-icon">expand_content</span></button>
       <button id="contract" class="hide"><span class="material-symbols-outlined large-icon">collapse_content</span></button>
-      <!-- Title for main area -->
-      <div class="task-list-title">Tasks</div>
-      <!-- this is the selected To Do list  -->
-      <div class="todo-collection">
-        <div class="todo">
-          <span class="material-symbols-outlined large-icon">circle</span>
-          <span>Clean Up Office</span>
-          <span class="material-symbols-outlined large-icon">star</span>
-        </div>
-      </div>
-      
+      <!-- Title for main area = List Name-->
+      <div class="task-list-title"></div>   
+      <!-- this is for the selected To Do list  -->
+      <div class="todo-collection"></div>
+      <!-- this button is temporary -->
       <button id="opennote">Open Note</button>
     </div>
     <div class="main-bottom">
@@ -77,6 +76,13 @@
       
   </div>   <!-- Column 3: Sliding panel -->
 </div>
+<dialog id="newListDialog">
+  <form method="dialog">
+    <input type="text" id="inputField" placeholder="Enter New List Name" />
+    <button type="submit">Submit</button>
+    <button formmethod="dialog" value="cancel">Cancel</button>
+  </form>
+</dialog>
 <script type="module" src="./todo-app.js"></script>
 </body>
 </html>
