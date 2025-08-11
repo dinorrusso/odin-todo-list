@@ -22,7 +22,7 @@ export class TodoAppController {
     handleListSelected(listName) {
         this.dataService.setActiveListName(listName);
         this.mainContentView.renderActiveList();
-        this.detailView.hide();
+        this.detailView.hideDetailPanel();
        
     }
     

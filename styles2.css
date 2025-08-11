@@ -44,6 +44,23 @@
 html {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+/* button {
+  width: 150px;
+  padding: 10px;
+  margin: 10px;
+
+  font-size: 1rem;
+  background-color: rgb(60, 60, 242);
+  border-radius: 15px;
+  color: white;
+  border: none;
+} */
+
+/* styles.css */
+.avatar-image {
+  width: 48px;
+  height: 48px;
+}
 
 .hide {
   display: none;

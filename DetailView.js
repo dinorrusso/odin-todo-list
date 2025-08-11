@@ -5,13 +5,44 @@ export class DetailView {
         this.dataService = dataService;
         this.detailPanel = document.querySelector(".detail-panel");
         this.renderDetailPanel();
-
         this.setupEventListeners();
     }
     renderDetailPanel() {
+        const detailPanel = document.querySelector('.detail-panel');
+        detailPanel.innerHTML = ''; // Clear any existing content
 
+        // Create detail content div
+        const detailContentDiv = document.createElement('div');
+        detailContentDiv.className = 'detail-content';
+        detailContentDiv.textContent = 'detail view content goes in here';
+
+        // Create detail bottom div
+        const detailBottomDiv = document.createElement('div');
+        detailBottomDiv.className = 'detail-bottom';
+
+        // Create the button
+        const closeButton = document.createElement('button');
+        closeButton.id = 'closenote';
+
+        // Create the span for the icon
+        const iconSpan = document.createElement('span');
+        iconSpan.className = 'material-symbols-outlined large-icon';
+        iconSpan.textContent = 'chevron_right';
+
+        // Append everything
+        closeButton.appendChild(iconSpan);
+        detailBottomDiv.appendChild(closeButton);
+        detailPanel.appendChild(detailContentDiv);
+        detailPanel.appendChild(detailBottomDiv);
+
+        // Add event listener for the close button
+        closeButton.addEventListener('click', () => {
+            // Logic to close the detail view
+            this.hideDetailPanel();
+        });
     }
-    hide(){
+
+    hideDetailPanel(){
         this.detailPanel.className = "detail-panel";
         //takes off open
     }

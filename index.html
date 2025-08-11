@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ToDo</title>
   <link rel="stylesheet" href="./reset.css">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles2.css">
   <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> -->
-   <link
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-  rel="stylesheet"
-/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
 </head>
+
 <body>
   <div class="app-container">
-  <aside class="sidebar">
+    <aside class="sidebar">
       <div class="sidebar-content">
-        
+
         <div class="profile">
-          <span class="avatar"><img
-                src="images/Avatar_with_bg.png"
-                alt="avatar"
-                style="width: 48px; height: 48px"
-            />
+          <span class="avatar"><img src="images/Avatar_with_bg.png" alt="avatar" class="avatar-image" />
           </span>
           <span>
             <p class="profile-name">Demo Man</p>
-            <p class="profile-mail">dinorrusso@gmail.com</p>
+            <p class="profile-mail">demoman@gmail.com</p>
           </span>
         </div>
         <div class="predefined-lists-container">
@@ -46,42 +43,43 @@
           </div> -->
         </div>
         <div class="sidebar-bottom">
-            <div class="addlist">
-              <span class="material-symbols-outlined large-icon">add</span>
-              <span>New List</span>
-            </div>
+          <div class="addlist">
+            <span class="material-symbols-outlined large-icon">add</span>
+            <span>New List</span>
+          </div>
         </div>
       </div>
-      
-  </aside>     <!-- Column 1: Sidebar -->
-  <main class="main">
-    <div class="main-content">
-      <!-- see MainContentView.js -->
-    </div>
-    <div class="main-bottom">
-      <!-- <div class="addtask">
+
+    </aside> <!-- Column 1: Sidebar -->
+    <main class="main">
+      <div class="main-content">
+        <!-- see MainContentView.js -->
+      </div>
+      <div class="main-bottom">
+        <!-- <div class="addtask">
         <span class="material-symbols-outlined large-icon">add</span>
         <span>Add a task</span>
     </div> -->
-  </main>  <!-- Column 2: Main content -->
-  <!-- Column 3: DetailView -->
-  <div class="detail-panel">
-      <div class="detail-content">detail view content goes in here
+    </main> <!-- Column 2: Main content -->
+    <!-- Column 3: DetailView -->
+    <div class="detail-panel">
+      <!-- <div class="detail-content">detail view content goes in here
 
       </div>
       <div class="detail-bottom">
-         <button id="closenote"><span class="material-symbols-outlined large-icon">chevron_right</span></button>
-      </div>
-      
-  </div>   <!-- Column 3: DetailView -->
-</div>
-<dialog id="newListDialog">
+        <button id="closenote"><span class="material-symbols-outlined large-icon">chevron_right</span></button>
+      </div> -->
+
+    </div> <!-- Column 3: DetailView -->
+  </div> <!-- app constiner-->
+  <!-- <dialog id="newListDialog" moved to SidebarView>
   <form method="dialog">
     <input type="text" id="inputField" placeholder="Enter New List Name" />
     <button type="submit">Submit</button>
     <button formmethod="dialog" value="cancel">Cancel</button>
   </form>
-</dialog>
-<script type="module" src="./todo-app-test.js"></script>
+</dialog> -->
+  <script type="module" src="./todo-app-test.js"></script>
 </body>
+
 </html>

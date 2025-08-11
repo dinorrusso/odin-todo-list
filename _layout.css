@@ -1,0 +1,180 @@
+/* _layout.css */
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar {
+  flex: 0 0 25vw;
+  transition: transform 0.3s ease, flex-basis 0.3s ease;
+  background: var(--sidebar-bg);
+}
+.main {
+  flex: 1 1 auto;
+  transition: width 0.3s ease;
+  z-index: 1;
+  background: var(--main-area-bg);
+  padding: 2rem;
+}
+
+.detail-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 25vw; /* Or any width you like */
+  height: 100%;
+  background: var(--overlay-bg);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+.detail-panel.open {
+  transform: translateX(0);
+}
+.detail-content {
+  flex: 1 1 auto; /* take remaining space */
+  overflow-y: auto; /* scroll if content is long */
+}
+.detail-bottom {
+  flex-shrink: 0; /* do not shrink */
+  /* optionally add background, padding, border */
+}
+
+.sidebar,
+.main,
+.detail-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* fill vertical viewport */
+}
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* take remaining space */
+  /* overflow-y: auto;  */
+  /* flex: 1 1 auto; 
+  overflow-y: auto;  */
+}
+.sidebar-bottom {
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* take remaining space */
+  overflow-y: auto; /* scroll if content is long */
+}
+.main-bottom {
+  flex-shrink: 0; /* do not shrink */
+  /* optionally add background, padding, border */
+  margin-bottom: 2rem;
+}
+.hide {
+  display: none;
+}
+
+
+.sidebar.closed {
+  transform: translateX(-100%);
+  flex-basis: 0; /* collapse actual space taken */
+  overflow: hidden; /* optional */
+}
+.detail-panel
+  .detail-bottom
+  button#closenote
+  span.material-symbols-outlined.large-icon {
+  font-size: 36px;
+}
+
+
+.user-list {
+  display: grid;
+  padding: 5px;
+  grid-template-columns: 4rem 1fr 4rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  /* background: white; */
+  font-size: 1.25rem;
+  color: black;
+}
+
+.user-list:hover {
+  cursor: pointer;
+}
+.user-list > :nth-child(1) {
+  justify-self: center; /* horizontally center content in 1st column */
+  align-self: center; /* vertically center content */
+}
+.user-list.selected {
+  background-color: #a6a6a6;
+}
+.user-list span.material-symbols-outlined.large-icon {
+  font-size: 2rem;
+  color: #5467ae;
+}
+.user-list span.name {
+  font-size: 1.5 rem;
+}
+.todo-detail {
+  display: grid;
+  padding-left: 25px;
+  padding-top: 25px;
+  grid-template-columns: 4rem 1fr 4rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  /* background: white; */
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: black;/* background-color: #c0392b; */
+
+}
+/* First column cell */
+.todo-detail > :nth-child(1) {
+  justify-self: center;
+}
+
+/* Second column cell */
+.todo-detail > :nth-child(2) {
+  justify-self: start; /* left align */
+}
+
+/* Third column cell */
+.todo-detail > :nth-child(3) {
+  justify-self: center;
+}
+.subtasks {
+  display: flex;
+  flex-direction: column;
+  /* gap: 15px; */
+
+}
+.subtask {
+  display: grid;
+  padding-top: 8px;
+  padding-left: 25px;
+  grid-template-columns: 4rem 1fr;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: rgb(72, 72, 72);
+}
+/* First column cell */
+.subtask > :nth-child(1) {
+  justify-self: center;
+}
+
+/* Second column cell */
+.subtask > :nth-child(2) {
+  justify-self: start; /* left align */
+}
+/* ... (all your existing code) ... */
+.next-subtask,
+.add-subtask {
+  color: blue;
+}

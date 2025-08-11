@@ -9,6 +9,8 @@ export class SidebarView{
 
         this.sidebar = document.querySelector("aside.sidebar");
         this.newListDialog = document.getElementById('newListDialog');
+        this.newListDialog = this.createDialog(); // Create the dialog and store it
+        document.body.appendChild(this.newListDialog); // Append it to the body
         this.setupUiElements();
         this.setupEventListeners();
     }
@@ -41,8 +43,38 @@ export class SidebarView{
         });
     }//setupUiElements
 
+    // SidebarView.js (inside the class)
+  createDialog() {
+    const dialog = document.createElement('dialog');
+    dialog.id = 'newListDialog';
+
+    const form = document.createElement('form');
+    form.method = 'dialog';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = 'inputField';
+    input.placeholder = 'Enter New List Name';
+
+    const submitButton = document.createElement('button');
+    submitButton.type = 'submit';
+    submitButton.textContent = 'Submit';
+
+    const cancelButton = document.createElement('button');
+    cancelButton.formMethod = 'dialog';
+    cancelButton.value = 'cancel';
+    cancelButton.textContent = 'Cancel';
+
+    form.appendChild(input);
+    form.appendChild(submitButton);
+    form.appendChild(cancelButton);
+
+    dialog.appendChild(form);
+    return dialog;
+  }
     //
     setupEventListeners(){
+      
       //sidebar list selection
       const sidebarContentDiv = document.querySelector('.sidebar');
       sidebarContentDiv.addEventListener('click', (event) => this.handleListClicked(event));

@@ -1,0 +1,8 @@
+/* _base.css */
+html {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.avatar-image {
+  width: 48px;
+  height: 48px;
+}
