@@ -9,4 +9,4 @@ export const userListsContainer = document.querySelector(".user-lists-container"
 export const mainContent = document.querySelector(".main-content");
 export const addListDiv = document.querySelector('.sidebar-bottom .addlist');
 export const newListDialog = document.getElementById('newListDialog');
-export const taskListTitle = document.querySelector('.task-list-title');
+//export const taskListTitle = document.querySelector('.task-list-title');

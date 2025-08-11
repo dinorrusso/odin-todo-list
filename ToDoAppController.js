@@ -10,7 +10,7 @@ export class TodoAppController {
         this.sidebarView = new SidebarView(this.dataService, this); // Pass reference to itself
         this.mainContentView = new MainContentView(this.dataService, this);
         this.detailView = new DetailView(this.dataService, this);
-        this.init(); //may not need this inits in constructors
+        this.init();
     }
 
     init() {
@@ -25,7 +25,7 @@ export class TodoAppController {
         this.detailView.hide();
        
     }
-
+    
     // Method called by the SidebarView when a new list is created
     handleNewListCreated(newList) {
         this.dataService.addNewList(newList);

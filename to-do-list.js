@@ -1,16 +1,29 @@
+// to-do-list.js
 export class ToDoList {
-  #name = '';
+  #name = "";
   #id = null;
   #predefined = false;
-  #todos = [];
-  
+  #todos = []; //collection of ToDoItem
+
   constructor(name, predefined = false) {
     this.#name = name;
     this.#id = crypto.randomUUID();
     this.#predefined = predefined;
   }
-
-   // Get all list  name
+// A static "factory" method for reviving objects from JSON
+    static fromJSON(data) {
+        // Create an empty instance, bypassing the constructor's logic
+        const list = new ToDoList(data.name || 'Untitled'); // Pass a default name
+        
+        // Manually set the private fields from the saved data
+        list.#name = data.name;
+        list.#id = data.id; // Use the STORED ID
+        list.#predefined = data.predefined;
+        list.#todos = []; // Start with an empty array
+        
+        return list;
+    }
+  // Get all list  name
   getName() {
     return this.#name;
   }
@@ -18,25 +31,43 @@ export class ToDoList {
   getId() {
     return this.#id;
   }
-  
+
+  isPredefined() {
+    return this.#predefined;
+  }
+
   // Get all projects (returns a shallow copy of the array)
   getToDoItems() {
     return [...this.#todos];
   }
 
-  // Get a project by ID (returns the actual object)
-  // getTodoListById(todoId) {
-  //   return this.#todos.find(td => td.id === todoId);
-  // }
+  //Get a ToDoItem by ID (returns the actual object)
+  getToDoItemById(todoId) {
+    return this.#todos.find((td) => td.id === todoId);
+  }
 
-  // Add a new todo item
+  // Add a new ToDoItem
   addToDo(todoItem) {
     this.#todos.push(todoItem);
   }
 
-  // Remove a project by ID
+  // Remove a ToDoItem by ID
   removeToDo(todoId) {
-    this.#todos = this.#todos.filter(td => td.id !== todoId);
+    this.#todos = this.#todos.filter((td) => td.id !== todoId);
   }
+  
+  getLength(){
+    return this.#todos.length;
+  }
+  toJSON() {
+        return {
+          name: this.#name,
+          id: this.#id,
+          predefined: this.#predefined,
+          todos : this.#todos
+        };
+    }
+
+  
 }
 
