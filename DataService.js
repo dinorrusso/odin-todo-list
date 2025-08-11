@@ -1,0 +1,174 @@
+// DataService.js
+
+import { generateTestLists } from "./test-data.js";
+import { ToDoList } from "./to-do-list.js";
+import { ToDoItem, Subtask } from "./to-do-item.js";
+
+export class DataService {
+  constructor() {
+    this.todoListCollection = []; //holds all ToDoItem
+    this.listNames = new Set();
+    this.activeTodoListName;
+    this.initializeData();
+  }
+
+  initializeData() {
+    if (localStorage.getItem("todoListCollection") === null) {
+      //no persistent data - generate test data
+      const initialLists = generateTestLists();
+      this.todoListCollection = initialLists;
+      this.activeTodoListName = "Tasks";
+      this.savePersistentData();
+    } else {
+      //get persistent data
+      this.getPersistentData();
+    }
+  }
+
+  getAllItems() {
+    return this.todoListCollection.flatMap((list) => list.getToDoItems());
+  }
+
+  getTodoListCollection() {
+    return this.todoListCollection;
+  }
+
+  getActiveListName() {
+    return this.activeTodoListName;
+  }
+
+  setActiveListName(name) {
+    this.activeTodoListName = name;
+    this.savePersistentData();
+    this.getPersistentData();
+  }
+
+  addNewList(name) {
+    console.log("in add new list, name:", name);
+    const newList = new ToDoList(name);
+    console.log("in add new list, newlist:", newList);
+    this.todoListCollection.push(newList);
+    console.log(
+      "in add new list after push, todoListCollection:",
+      this.todoListCollection
+    );
+    this.savePersistentData();
+    this.getPersistentData();
+    return newList;
+  }
+
+  getTaskList() {
+    return this.todoListCollection.find((list) => list.getName() === "Tasks");
+  }
+
+  getNamedList(name) {
+    const allItems = this.getAllItems();
+    let list;
+    switch (name) {
+      case "My Day":
+        list = allItems.filter((item) => item.isMyDay());
+        break;
+      case "Important":
+        list = allItems.filter((item) => item.isImportant());
+        break;
+      case "Planned":
+        list = allItems.filter((item) => item.getDueDate() !== null);
+        break;
+      default:
+        list = allItems.filter((item) => item.getTag() === name);
+    }
+    return list;
+  }
+
+  getFilteredToDoList(name) {
+    const allLists = this.getTodoListCollection();
+    const allItems = allLists.flatMap((list) => list.getToDoItems());
+    let filteredList = null;
+    switch (name) {
+      case "My Day":
+        filteredList = allItems.filter((item) => item.isMyDay());
+        break;
+      case "Important":
+        filteredList = allItems.filter((item) => item.isImportant());
+        break;
+      case "Planned":
+        filteredList = allItems.filter((item) => item.getDueDate() !== null);
+        break;
+    }
+
+    return filteredList;
+  }
+
+  getTodoById(id) {
+    const allLists = this.getTodoListCollection();
+    const allItems = allLists.flatMap((list) => list.getToDoItems());
+    const todoItem = allItems.find((item) => item.getId() === id);
+    return todoItem;
+  }
+  savePersistentData() {
+    console.log("in save.  this.todoListCollection", this.todoListCollection);
+    localStorage.setItem(
+      "todoListCollection",
+      JSON.stringify(this.todoListCollection)
+    );
+    localStorage.setItem(
+      "activeTodoListName",
+      JSON.stringify(this.activeTodoListName)
+    );
+    console.log(
+      "exiting savePersistentData.  this.todoListCollection",
+      this.todoListCollection
+    );
+  }
+  getPersistentData() {
+    const storedLists = JSON.parse(localStorage.getItem("todoListCollection"));
+
+    if (storedLists) {
+      this.todoListCollection = storedLists.map((listData) => {
+        // Use the static "fromJSON" method to revive the list while preserving its ID
+        const revivedList = ToDoList.fromJSON(listData);
+
+        // Check if there are any to-do items to revive
+        if (listData.todos && listData.todos.length > 0) {
+          const revivedItems = listData.todos.map((itemData) => {
+            // Create a new ToDoItem instance with the correct constructor arguments
+            const revivedItem = new ToDoItem(itemData.tag, itemData.title);
+
+            // Manually restore all other properties from the saved data
+            revivedItem.id = itemData.id; // Restore original ID
+            revivedItem.setMyDay(itemData.myDay);
+            if (itemData.important) {
+              revivedItem.toggleImportant();
+            }
+            revivedItem.setDueDate(
+              itemData.dueDate ? new Date(itemData.dueDate) : null
+            );
+            revivedItem.addNote(itemData.note);
+
+            // Revive the nested subtasks
+            if (itemData.subtasks && itemData.subtasks.length > 0) {
+              itemData.subtasks.forEach((subtaskData) => {
+                const revivedSubtask = new Subtask(
+                  subtaskData.name,
+                  subtaskData.done
+                );
+                revivedItem.addSubtask(revivedSubtask);
+              });
+            }
+
+            return revivedItem;
+          });
+
+          // Use the public "addToDo" method to correctly populate the private #todos array
+          revivedItems.forEach((item) => revivedList.addToDo(item));
+        }
+
+        return revivedList;
+      });
+    }
+
+    // Restore the active list name
+    this.activeTodoListName =
+      JSON.parse(localStorage.getItem("activeTodoListName")) || "Tasks";
+  }
+}
