@@ -15,10 +15,21 @@
   --shadow: rgba(13, 27, 42, 0.1);
   --shadow-hover: rgba(13, 27, 42, 0.2);
   --card-color: white;
-  --add-task-color: #5467ae;
+  --add-task-bg-color: #5467ae;
+  --add-task-text-color: white;
   --main-area-bg: #6478c7;
+  --main-task-color: white;
+  --main-task-text-color: black;
   --sidebar-bg: #e8e7e7;
-  --overlay-bg: white;
+  --sidebar-text: black;
+  --detail-bg: white;
+  --detail-text-color: black;
+  --selected-list-bg: #a6a6a6;
+  --main-text: black;
+  --subtask-action:#415a77;
+  --subtask-color: rgb(72, 72, 72);
+  --todo-selection-border: rgb(1, 1, 74);
+  --addlist: black;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -36,9 +47,21 @@
     --shadow: rgba(0, 0, 0, 0.3);
     --shadow-hover: rgba(0, 0, 0, 0.5);
     --card-color: #404346;
-    --add-task-color: #e8e7e7;
+    --main-task-color: #373835;
+    --main-task-text-color: white;
+    --add-task-bg-color: #373835;
+    --add-task-text-color: white;
+    
     --main-area-bg: #1e1e1e;
     --sidebar-bg: #2b2a28;
-    --overlay-bg: #323232;
+    --sidebar-text: #ebebeb;
+    --detail-bg: #323232;
+    --detail-text-color: white;
+    --selected-list-bg: #373835;
+    --main-text: #ebebeb;
+    --subtask-action:#778da9;
+    --subtask-color: #e0e1dd;
+    --todo-selection-border:#ebebeb; 
+    --addlist: white;
   }
 }

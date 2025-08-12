@@ -1,6 +1,6 @@
 //MainContentView.js
 
-import { ToDoItem } from "./to-do-item";
+import { ToDoItem } from "./to-do-item.js";
 
 export class MainContentView {
   constructor(dataService, controller) {
