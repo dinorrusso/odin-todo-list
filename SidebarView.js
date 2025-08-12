@@ -121,8 +121,8 @@ export class SidebarView{
         const listItemDiv = document.createElement("div");
         listItemDiv.className = "user-list";
         listItemDiv.id = todoList.getId();
-        // if (ACTIVE_TODO_LIST.todoList && todoList.getId() === ACTIVE_TODO_LIST.todoList.getId()) {
-        //   listItemDiv.classList.add("selected");
+        //if(listItemDiv. === this.dataService.getActiveListName()){
+        //     listItemDiv.classList.add('selected');
         // }
         let spanElement = document.createElement("span");
         spanElement.className = "material-symbols-outlined large-icon";
@@ -131,6 +131,10 @@ export class SidebarView{
         spanElement = document.createElement("span");
         spanElement.className = "name";
         spanElement.textContent = todoList.getName();
+        //highlight if Active
+        if (todoList.getName() === this.dataService.getActiveListName()){
+          listItemDiv.classList.add('selected');
+        }
         listItemDiv.appendChild(spanElement);
         spanElement = document.createElement("span");
         spanElement.className = "count";

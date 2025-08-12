@@ -53,9 +53,9 @@ export class ToDoList {
 
   // Remove a ToDoItem by ID
   removeToDo(todoId) {
-    this.#todos = this.#todos.filter((td) => td.id !== todoId);
+    this.#todos = this.#todos.filter((td) => td.getId() !== todoId); // Use td.getId()
   }
-  
+ 
   getLength(){
     return this.#todos.length;
   }

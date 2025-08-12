@@ -44,14 +44,8 @@ export class DataService {
   }
 
   addNewList(name) {
-    console.log("in add new list, name:", name);
     const newList = new ToDoList(name);
-    console.log("in add new list, newlist:", newList);
     this.todoListCollection.push(newList);
-    console.log(
-      "in add new list after push, todoListCollection:",
-      this.todoListCollection
-    );
     this.savePersistentData();
     this.getPersistentData();
     return newList;
@@ -59,6 +53,9 @@ export class DataService {
 
   getTaskList() {
     return this.todoListCollection.find((list) => list.getName() === "Tasks");
+  }
+  getListByName(name){
+    return this.todoListCollection.find((list) => list.getName() === name);
   }
 
   getNamedList(name) {
@@ -100,13 +97,21 @@ export class DataService {
   }
 
   getTodoById(id) {
+    console.log('in TodoById id', id);
     const allLists = this.getTodoListCollection();
     const allItems = allLists.flatMap((list) => list.getToDoItems());
     const todoItem = allItems.find((item) => item.getId() === id);
     return todoItem;
   }
+  
+  deleteTodoById(id) {
+    //need to know what list it is in
+    const todoItemToDelete = this.getTodoById(id);
+    const listName = todoItemToDelete.getTag();
+    const list = this.getListByName(listName);
+    list.removeToDo(id);
+  }
   savePersistentData() {
-    console.log("in save.  this.todoListCollection", this.todoListCollection);
     localStorage.setItem(
       "todoListCollection",
       JSON.stringify(this.todoListCollection)

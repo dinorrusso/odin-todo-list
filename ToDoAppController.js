@@ -4,6 +4,7 @@ import { SidebarView } from "./SidebarView.js";
 import { MainContentView } from "./MainContentView.js";
 import { DetailView } from "./DetailView.js";
 
+
 export class TodoAppController {
     constructor() {
         this.dataService = new DataService();
@@ -36,8 +37,19 @@ export class TodoAppController {
     }
     // Method called by the MainContentView when a todo item is selected
     handleTodoItemSelected(todoItem) {
-        console.log('in handleTodoItemSelected todoItem: ', todoItem);
         this.detailView.renderToDoItem(todoItem);
+    }
+    handleTodoItemDeleted(todoItem) {
+        this.dataService.savePersistentData();
+        location.reload();
+       
+        
+    }
+    handleToDoItemStateChanged(){
+        //need to refresh the sidebar, maincontent, and possibly detail panel
+        //save the state and reload
+        this.dataService.savePersistentData();
+        location.reload();
     }
     //methods called by MainContentView when expand/contract selected
     handleExpandSelected(){

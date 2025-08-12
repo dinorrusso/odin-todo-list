@@ -178,3 +178,7 @@
 .add-subtask {
   color: blue;
 }
+.delete,
+.important {
+  cursor: pointer;
+}
