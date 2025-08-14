@@ -3,7 +3,9 @@ import { DataService } from "./DataService.js";
 import { SidebarView } from "./SidebarView.js";
 import { MainContentView } from "./MainContentView.js";
 import { DetailView } from "./DetailView.js";
-
+import { ModalView } from './ModalViews.js';
+import { ToDoList } from "./to-do-list.js";
+import { ToDoItem, Subtask } from "./to-do-item.js";
 
 export class TodoAppController {
     constructor() {
@@ -18,6 +20,14 @@ export class TodoAppController {
         this.dataService.initializeData();
         this.mainContentView.renderActiveList();
     }
+    // Method called by the SidebarView when a list is deleted
+    handleListDeleted(listId){
+        console.log('in handleListDeleted listID:', listId )
+        this.dataService.deleteListById(listId);
+        location.reload();
+
+    }
+
 
     // Method called by the SidebarView when a list is selected
     handleListSelected(listName) {
@@ -58,4 +68,54 @@ export class TodoAppController {
     handleContractSelected(){
         this.sidebarView.showSidebar();
     };
+
+
+  handleAddItem() {
+    console.log('in handleAddItem');
+    const contentHtml = `
+      <input type="text" class="modal-input" placeholder="Enter item name...">
+    `;
+
+    // The callback function will be executed when the user clicks 'Save'
+    const onSaveCallback = (itemName) => {
+      if (itemName) {
+        let todo;
+        let targetList;
+        const activeList = this.dataService.activeTodoListName;
+        switch (activeList) {
+            case 'My Day':
+                todo = new ToDoItem('Tasks', itemName);
+                todo.setMyDay(true);
+                targetList = this.dataService.getListByName('Tasks');
+                targetList.addToDo(todo);
+                break;
+            case 'Important':
+                todo = new ToDoItem('Tasks', itemName);
+                todo.toggleImportant();
+                targetList = this.dataService.getListByName('Tasks');
+                targetList.addToDo(todo);
+                break;
+            case 'Planned':
+                todo = new ToDoItem('Tasks', itemName);
+                const date = new Date();         // create a Date object for now
+                date.setDate(date.getDate() + 1); // add one to the day
+                todo.setDueDate(date); 
+                targetList = this.dataService.getListByName('Tasks');
+                targetList.addToDo(todo);
+                break;
+            default:
+                todo = new ToDoItem(activeList, itemName);
+                targetList = this.dataService.getListByName(activeList);
+                targetList.addToDo(todo);
+            }
+        
+        this.dataService.savePersistentData();
+        location.reload();
+
+      }
+    };
+
+    new ModalView("Add New To-Do Item", contentHtml, onSaveCallback);
+  }
 }
+

@@ -140,6 +140,25 @@ export class SidebarView{
         spanElement.className = "count";
         spanElement.textContent = todoList.getLength();
         listItemDiv.appendChild(spanElement);
+
+        //add delete 
+        spanElement = document.createElement("span");
+        spanElement.className = "material-symbols-outlined large-icon";
+        spanElement.textContent = "delete";
+        spanElement.addEventListener("click", (event) => {
+          
+          const parent = event.target.parentElement;
+          console.log('trash clicked - parent : ', parent);
+          console.log('trash clicked - parent id : ', parent.id);
+          event.stopPropagation();
+          this.controller.handleListDeleted(parent.id);
+          
+        });
+
+        listItemDiv.appendChild(spanElement);
+        
+
+        //
         this.userListsContainer.appendChild(listItemDiv);
     }
     

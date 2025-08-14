@@ -25,6 +25,23 @@ export class DataService {
     }
   }
 
+  //
+  deleteListById(id) {
+      // Filter the todoListCollection to create a new array
+      // that includes all lists except the one with the matching id.
+      this.todoListCollection = this.todoListCollection.filter(
+        (list) => list.getId() !== id
+      );
+      // After modifying the collection, save the updated data to local storage.
+      this.savePersistentData();
+  }
+
+
+
+
+  //
+
+
   getAllItems() {
     return this.todoListCollection.flatMap((list) => list.getToDoItems());
   }

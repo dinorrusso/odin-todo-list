@@ -22,7 +22,7 @@ export class DetailView {
 
         // Create the button
         const closeButton = document.createElement('button');
-        closeButton.id = 'closenote';
+        closeButton.id = 'close-detail';
 
         // Create the span for the icon
         const iconSpan = document.createElement('span');
@@ -32,6 +32,20 @@ export class DetailView {
         // Append everything
         closeButton.appendChild(iconSpan);
         detailBottomDiv.appendChild(closeButton);
+        //new 
+        const trashButton = document.createElement('button');
+        trashButton.id = 'delete-todo';
+
+        // Create the span for the icon
+        const trashIconSpan = document.createElement('span');
+        trashIconSpan.className = 'material-symbols-outlined large-icon';
+        trashIconSpan.textContent = 'delete';
+        trashButton.appendChild(trashIconSpan);
+        detailBottomDiv.appendChild(trashButton);
+    
+
+
+        //end new
         detailPanel.appendChild(detailContentDiv);
         detailPanel.appendChild(detailBottomDiv);
 
@@ -48,7 +62,7 @@ export class DetailView {
     }
     setupEventListeners() {
         //close DetailView
-        const closeDetailPanelBtn = document.getElementById("closenote");
+        const closeDetailPanelBtn = document.getElementById("close-detail");
         closeDetailPanelBtn.addEventListener("click", () => {
             const detailPanel = document.querySelector(".detail-panel");
             detailPanel.className = "detail-panel";

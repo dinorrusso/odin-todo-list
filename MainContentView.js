@@ -39,8 +39,12 @@ export class MainContentView {
     //Title area
     const titleDiv = document.createElement("div");
     titleDiv.className = "task-list-title";
+ 
+    //
     this.mainContent.appendChild(titleDiv);
     this.taskListTitle = titleDiv;
+    
+    
     //this is for the selected To Do Items list
     const todoItemsDiv = document.createElement("div");
     todoItemsDiv.className = "todo-collection";
@@ -58,15 +62,9 @@ export class MainContentView {
     span.textContent = "Add an Item";
     addTaskDiv.appendChild(span);
     //add the event listener
-    span.addEventListener("click", (event) => {
-        //let's cheat 
-        const taskTitle = prompt("Enter item description", "New Task");
-        const newItem = new ToDoItem(this.dataService.activeTodoListName(), taskTitle);
-        console.log ('new item: newItem:', newItem);
-      // logic here for add an item
-    //   const todoItem = this.dataService.getTodoById(parent.id);
-    //   todoItem.toggleImportant();
-    //   this.controller.handleToDoItemStateChanged();
+    addTaskDiv.addEventListener("click", (event) => {
+        console.log('in add item click :', event);
+        this.controller.handleAddItem();
     });
     this.mainBottom.appendChild(addTaskDiv);
   }

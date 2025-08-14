@@ -30,6 +30,9 @@
   --subtask-color: rgb(72, 72, 72);
   --todo-selection-border: rgb(1, 1, 74);
   --addlist: black;
+  --modal-bg: white;
+  --modal-text-color: black;
+  --modal-input-bg: white;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -63,5 +66,8 @@
     --subtask-color: #e0e1dd;
     --todo-selection-border:#ebebeb; 
     --addlist: white;
+    --modal-bg: #323232;
+    --modal-text-color: white;
+    --modal-input-bg: rgb(200, 200, 185);
   }
 }
