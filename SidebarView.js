@@ -43,7 +43,7 @@ export class SidebarView{
         });
     }//setupUiElements
 
-    // SidebarView.js (inside the class)
+  
   createDialog() {
     const dialog = document.createElement('dialog');
     dialog.id = 'newListDialog';

@@ -47,6 +47,9 @@ export class ToDoItem {
   getTag() {
     return this.#tag;
   }
+  setTag(listName) {
+    this.#tag = listName;
+  }
   getTitle() {
     return this.#title;
   }

@@ -35,11 +35,10 @@ export class DataService {
       // After modifying the collection, save the updated data to local storage.
       this.savePersistentData();
   }
-
-
-
-
   //
+    renameList(thisList){
+      
+    }
 
 
   getAllItems() {
@@ -72,6 +71,8 @@ export class DataService {
     return this.todoListCollection.find((list) => list.getName() === "Tasks");
   }
   getListByName(name){
+    console.log('in getListByName name: ', name);
+    console.log(this.todoListCollection.find((list) => list.getName() === name));
     return this.todoListCollection.find((list) => list.getName() === name);
   }
 

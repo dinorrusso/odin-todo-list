@@ -27,6 +27,15 @@ export class ToDoList {
   getName() {
     return this.#name;
   }
+  setName(name) {
+    this.#name = name;
+    //iterate through each list-item and change the list-item tag to 
+    //match the new name
+     this.#todos.forEach((item) => {
+        item.setTag(name);
+    });
+    console.log('after setName : ', name, this.#todos);
+  }
 
   getId() {
     return this.#id;

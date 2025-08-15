@@ -41,7 +41,9 @@
   overflow-y: auto; /* scroll if content is long */
 }
 .detail-bottom {
-  flex-shrink: 0; /* do not shrink */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* flex-shrink: 0; do not shrink */
   /* optionally add background, padding, border */
 }
 
@@ -88,16 +90,26 @@
 }
 .detail-panel
   .detail-bottom
-  button#closenote
-  span.material-symbols-outlined.large-icon {
-  font-size: 36px;
+  button#close-detail
+  span.material-symbols-outlined.large-icon,
+  .detail-panel
+  .detail-bottom
+  button#delete-todo
+  span.material-symbols-outlined.large-icon  {
+  font-size: 48px;
+  cursor: pointer;
 }
 
-
+/* .detail-panel
+  .detail-bottom
+  button#delete-todo
+  span.material-symbols-outlined.large-icon {
+  font-size: 36px;
+} */
 .user-list {
   display: grid;
   padding: 5px;
-  grid-template-columns: 4rem 1fr 4rem 4rem;
+  grid-template-columns: 4rem 30ch 2rem 2rem;
   align-items: center;
   margin-bottom: 0.5rem;
   /* background: white; */
@@ -125,10 +137,10 @@
 .todo-detail {
   display: grid;
   padding-left: 25px;
-  padding-top: 25px;
+  padding: 24px 16px;
   grid-template-columns: 4rem 1fr 4rem;
   align-items: center;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   /* background: white; */
   font-size: 1.5rem;
   font-weight: 500;
@@ -157,11 +169,12 @@
 }
 .subtask {
   display: grid;
-  padding-top: 8px;
+  /* padding-top: 8px; */
+  padding-bottom: 8px;
   padding-left: 25px;
   grid-template-columns: 4rem 1fr;
   align-items: center;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   font-size: 1.25rem;
   font-weight: 300;
   color: var(--subtask-color);
@@ -183,4 +196,59 @@
 .delete,
 .important {
   cursor: pointer;
+}
+.subtask.add-subtask,
+.myday.add,
+.subtask.next-subtask {
+  display: grid;
+  padding: 16px 16px;
+  padding-left: 25px;
+  grid-template-columns: 4rem 1fr 4rem;
+  align-items: center;
+  /* margin-bottom: 0.5rem; */
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--subtask-color);
+  outline: 1px solid var(--detail-action-border); /* thickness, style, color */
+  cursor: pointer;
+}
+.myday.add > :nth-child(1) {
+  justify-self: center;
+}
+.isdone,
+.isimportant,
+.subtaskdone {
+  cursor: pointer;
+}
+
+.text-area-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-area-div span {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--subtask-color);
+  background: var(--detail-bg);
+  border-top: 1px solid var(--detail-action-border); 
+  padding-top: 6px;           
+  margin-bottom: 6px; 
+  padding-left: 16px;  
+  display: block;            
+}
+
+.text-area-div textarea.note {
+  background: var(--detail-bg);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--subtask-color);
+  border: none;              
+  border-bottom: 1px solid var(--detail-action-border); 
+  outline: none;         
+  width: 100%;      
+  resize: none;
+  padding: 16px;               
+  box-sizing: border-box; 
 }

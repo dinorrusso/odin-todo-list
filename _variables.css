@@ -24,7 +24,7 @@
   --sidebar-text: black;
   --detail-bg: white;
   --detail-text-color: black;
-  --selected-list-bg: #a6a6a6;
+  --selected-list-bg: border: 4px solid var(--todo-selection-border); /* thickness, style, color */
   --main-text: black;
   --subtask-action:#415a77;
   --subtask-color: rgb(72, 72, 72);
@@ -33,6 +33,7 @@
   --modal-bg: white;
   --modal-text-color: black;
   --modal-input-bg: white;
+  --detail-action-border: #a6a6a6;
 }
 @media (prefers-color-scheme: dark) {
   :root {

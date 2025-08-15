@@ -26,12 +26,13 @@
   font-size: 36px;
   margin-right: 1rem;
 }
-.detail-panel .detail-bottom button#closenote {
+.detail-panel .detail-bottom button#close-detail,
+.detail-panel .detail-bottom button#delete-todo {
   background: transparent;
   border: none;
   color: rgb(127, 127, 127);
   padding: 10px 20px; /* Create enough padding space around the text for easy clicking */
-  cursor: pointer; /* Show pointer cursor on hover */
+  /* cursor: pointer;  */
   width: auto;
   height: auto;
 }
@@ -56,7 +57,7 @@
   margin-right: 24px;
 
 }
-.task-list-title {
+.task-list-header {
   display: grid;
   grid-template-columns: 1fr 4rem;
   color: white;
@@ -64,6 +65,14 @@
   font-weight: 700;
   margin-top: 1rem;
   margin-bottom: 2rem;
+}
+.task-list-header > .material-symbols-outlined.large-icon.hide {
+  cursor: none;
+  display: none;
+}
+.task-list-header > .material-symbols-outlined.large-icon {
+  cursor: pointer;
+  display:block;
 }
 
 .addtask {

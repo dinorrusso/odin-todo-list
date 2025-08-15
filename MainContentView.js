@@ -8,12 +8,29 @@ export class MainContentView {
     this.dataService = dataService;
     this.mainContent = document.querySelector(".main-content");
     this.mainBottom = document.querySelector(".main-bottom");
+    this.taskListHeader = this.createTaskListHeader();
     this.renderEmptyMainView();
+    
     this.taskListTitle;
+    this.actionDiv;
     this.todoCollection;
     this.expandBtn;
     this.contractBtn;
     this.setupEventListeners();
+  }
+  createTaskListHeader(){
+    const headerDiv = document.createElement("div");
+    headerDiv.className = "task-list-header";
+    const titleDiv = document.createElement("div");
+    titleDiv.className = "task-list-title";
+    headerDiv.appendChild(titleDiv);
+    this.taskListTitle = titleDiv;
+    const actionDiv = document.createElement("div");
+    actionDiv.className = "material-symbols-outlined large-icon hide";
+    actionDiv.textContent = "edit";
+    headerDiv.appendChild(actionDiv);
+    this.actionDiv = actionDiv;
+    return headerDiv;
   }
   renderEmptyMainView() {
     //expand/contract buttons
@@ -37,12 +54,7 @@ export class MainContentView {
     this.contractBtn = contractButton;
 
     //Title area
-    const titleDiv = document.createElement("div");
-    titleDiv.className = "task-list-title";
- 
-    //
-    this.mainContent.appendChild(titleDiv);
-    this.taskListTitle = titleDiv;
+    this.mainContent.appendChild(this.taskListHeader);
     
     
     //this is for the selected To Do Items list
@@ -79,6 +91,21 @@ export class MainContentView {
     todos.forEach((item, index) => {
       this.addTodoItemToView(item);
     });
+    //control which task list names can be edited
+    switch (activeTodoListName) {
+      //not editable
+      case "My Day":
+      case "Important":
+      case "Planned":
+      case "Tasks":
+        this.actionDiv.className = "material-symbols-outlined large-icon hide";
+        break;
+      default:
+        //editable
+        this.actionDiv.className = "material-symbols-outlined large-icon";
+        break;
+    }
+
   }
 
   //populate the ui with the to do items
@@ -150,13 +177,9 @@ export class MainContentView {
   //Main Content View Event Handlers
   setupEventListeners() {
     // edit the Task List name
-    this.taskListTitle.addEventListener("click", () => {
-      this.taskListTitle.contentEditable = "true";
-      this.taskListTitle.focus();
-    });
-
-    this.taskListTitle.addEventListener("blur", () => {
-      this.taskListTitle.contentEditable = "false";
+    this.actionDiv.addEventListener('click', (event) => {
+      console.log('in edit event for Title', event);
+      this.controller.handleRenameList();
     });
 
     this.todoCollection.addEventListener("click", (event) => {

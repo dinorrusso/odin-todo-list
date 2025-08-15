@@ -1,4 +1,5 @@
 //DetailView.js
+import { ToDoItem, Subtask } from "./to-do-item.js";
 export class DetailView {
     constructor(dataService, controller) {
         this.controller = controller;
@@ -6,6 +7,7 @@ export class DetailView {
         this.detailPanel = document.querySelector(".detail-panel");
         this.renderDetailPanel();
         this.setupEventListeners();
+        this.todoItem;
     }
     renderDetailPanel() {
         const detailPanel = document.querySelector('.detail-panel');
@@ -54,6 +56,15 @@ export class DetailView {
             // Logic to close the detail view
             this.hideDetailPanel();
         });
+
+        // Add event listener for the trash button
+        trashButton.addEventListener('click', (event) => {
+            // delete todo item
+            console.log('in trashButton event item:', this.todoItem);
+            this.dataService.deleteTodoById(this.todoItem.getId());
+            this.controller.handleTodoItemDeleted(this.todoItem);
+        });
+        
     }
 
     hideDetailPanel(){
@@ -72,6 +83,7 @@ export class DetailView {
     //common activity to render the todoItem clicked on
     renderToDoItem(item) {
         //open the panel
+        this.todoItem = item;
         const detailPanel = document.querySelector(".detail-panel");
         detailPanel.classList.add("open");
         //clear the panel content
@@ -80,6 +92,9 @@ export class DetailView {
         //Render the To Do Item heading
         detailContent.appendChild(this.renderToDoItemHeading(item));
         detailContent.appendChild(this.renderSubtasksSection(item));
+        detailContent.appendChild(this.renderAddToMyDay(item));
+        detailContent.appendChild(this.renderDueDate(item));
+        detailContent.appendChild(this.renderNote(item));
     }
         
 
@@ -92,8 +107,12 @@ export class DetailView {
         todoItemTitleDiv.id = item.getId();
         //done indicator
         let span = document.createElement("span");
-        span.classList = "material-symbols-outlined large-icon";
+        span.classList = "material-symbols-outlined large-icon isdone";
         span.textContent = item.isDone() ? "check_circle" : "circle";
+        //handle toggle done
+        span.addEventListener("click", () => {
+            console.log('in mark done: item:', item);
+        });
         //title
         todoItemTitleDiv.appendChild(span);
         span = document.createElement("span");
@@ -102,7 +121,7 @@ export class DetailView {
         todoItemTitleDiv.appendChild(span);
         //important indicator
         span = document.createElement("span");
-        span.classList = "material-symbols-outlined large-icon";
+        span.classList = "material-symbols-outlined large-icon isimportant";
         span.textContent = "star";
         if (item.isImportant()) {
             span.classList.add("filled-icon");
@@ -125,6 +144,10 @@ export class DetailView {
             span.textContent = 'Add Subtask';
             div.appendChild(span)
             subtaskDiv.appendChild(div);
+            //handle toggle done
+            subtaskDiv.addEventListener("click", () => {
+                console.log('in add subtask: item:', item);
+                });
         }else {
             //there are 1 or more subtasks to show
             //render + add step 
@@ -132,20 +155,23 @@ export class DetailView {
             // let div = document.createElement("div");
             // div.classList = 'subtask';
             subs.forEach((s, index) => {
+                console.log('s= ', s);
                 let div = document.createElement("div");
                 div.classList = 'subtask';
                 let span = document.createElement("span");
-                span.classList = "material-symbols-outlined large-icon";
-                span.textContent = "circle";
-            //     if (s.done) {
-            //         span.classList.add("filled-icon");
-            //     }
+                span.classList = "material-symbols-outlined large-icon subtaskdone";
+                span.textContent = s.done ? "check_circle" : "circle";"circle";
                 div.appendChild(span);
+                //handle toggle done
+                span.addEventListener("click", () => {
+                    console.log('in subtask done: s:', s);
+                    });
                 span = document.createElement("span");
                 span.textContent = s.name;
                 div.appendChild(span);
                 subtaskDiv.appendChild(div);
-                });
+
+                     });
                 let div = document.createElement('div');
                 div.classList = "subtask next-subtask"
                 let span = document.createElement("span");
@@ -160,7 +186,52 @@ export class DetailView {
         return subtaskDiv;
 
         }
-        
+    renderAddToMyDay(item){
+        const myDayDiv = document.createElement("div");
+        myDayDiv.classList = "myday add";
+        myDayDiv.dataset.mydata = item.getId();
+        let span = document.createElement("span"); 
+        span.classList = "material-symbols-outlined large-icon";
+        span.textContent = "sunny";
+        myDayDiv.appendChild(span);
+        span = document.createElement("span"); 
+        span.textContent = "Add to My Day";
+        myDayDiv.appendChild(span);
+        return myDayDiv;
+    }
+    renderDueDate(item){
+        const dueDateDiv = document.createElement("div");
+        dueDateDiv.classList = "myday add";
+        dueDateDiv.dataset.mydata = item.getId();
+        let span = document.createElement("span"); 
+        span.classList = "material-symbols-outlined large-icon";
+        span.textContent = "calendar_today";
+        dueDateDiv.appendChild(span);
+        span = document.createElement("span"); 
+        span.textContent = "Add Due Date";
+        dueDateDiv.appendChild(span);
+        return dueDateDiv;
+    }        
+
+    renderNote(item){
+        const noteTextAreaDiv = document.createElement("div");
+        noteTextAreaDiv.className ="text-area-div";
+        const span = document.createElement("span");
+        span.textContent = 'This is a note'
+        noteTextAreaDiv.appendChild(span);
+        const noteTextArea = document.createElement("textarea");
+        noteTextArea.classList = "note";
+        noteTextArea.id = item.getId();
+        noteTextArea.name = "todo-note";
+        noteTextArea.rows = 5;
+        noteTextArea.cols = 40;
+        noteTextArea.value = item.getNote();
+        noteTextAreaDiv.appendChild(noteTextArea);
+        noteTextArea.addEventListener("change", (event) => {
+                    console.log('in note change: ', event);
+                    });
+        return noteTextAreaDiv;
+    }  
 }
 
         

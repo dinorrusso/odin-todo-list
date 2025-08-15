@@ -41,7 +41,7 @@ export class TodoAppController {
     handleNewListCreated(newList) {
         this.dataService.addNewList(newList);
         this.sidebarView.addUserList(newList);
-        this.dataService.setActiveList(newList);
+        this.dataService.setActiveListName(newList);
         this.sidebarView.selectListInUI(newList);
         this.mainContentView.renderActiveList();
     }
@@ -116,6 +116,33 @@ export class TodoAppController {
     };
 
     new ModalView("Add New To-Do Item", contentHtml, onSaveCallback);
+  }
+
+
+  //
+  handleRenameList() {
+    const contentHtml = `
+      <input type="text" class="modal-input" placeholder="Enter new list name...">
+    `;
+
+    // The callback function will be executed when the user clicks 'Save'
+    const onSaveCallback = (listName) => {
+      if (listName) {
+        //change the name of the active List
+        //change the name of the actual list - which changes the tags of all 
+        //items in the list
+        const list = this.dataService.getListByName(this.dataService.activeTodoListName);
+        list.setName(listName);
+        //reset activeListName
+        this.dataService.setActiveListName(listName);
+        //display it
+        this.mainContentView.renderActiveList();
+        this.dataService.savePersistentData();
+        location.reload();
+      }
+    };
+
+    new ModalView("Rename List", contentHtml, onSaveCallback);
   }
 }
 
