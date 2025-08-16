@@ -44,18 +44,21 @@ export class MainContentView {
   }
   renderEmptyMainView() {
     //expand/contract buttons
-    const expandButton = document.createElement("button");
-    expandButton.id = "expand";
-    let span = document.createElement("span");
-    span.className = "material-symbols-outlined large-icon";
-    span.textContent = "expand_content";
-    expandButton.appendChild(span);
-    this.mainContent.appendChild(expandButton);
-    this.expandBtn = expandButton;
-
+    let span;
+    if(!this.controller.isMobile){
+        console.log('in renderEmptyMainView() is', this.controller.isMobile);
+        const expandButton = document.createElement("button");
+        expandButton.id = "expand";
+        span = document.createElement("span");
+        span.className = "material-symbols-outlined large-icon";
+        span.textContent = "expand_content";
+        expandButton.appendChild(span);
+        this.mainContent.appendChild(expandButton);
+        this.expandBtn = expandButton;
+      }
     const contractButton = document.createElement("button");
     contractButton.id = "contract";
-    contractButton.className = "hide";
+    // contractButton.className = "hide";
     span = document.createElement("span");
     span.className = "material-symbols-outlined large-icon";
     span.textContent = "collapse_content";
@@ -203,12 +206,14 @@ export class MainContentView {
       // ... logic to open the detail view panel
       // and display content
     });
-    // events for making task list expand/contract
-    this.expandBtn.addEventListener("click", () => {
-      this.controller.handleExpandSelected();
-      this.expandBtn.classList.add("hide");
-      this.contractBtn.classList.remove("hide");
-    });
+    // events for making task list expand/contract 
+    if(!this.controller.isMobile){ //NOT ON MOBILE
+        this.expandBtn.addEventListener("click", () => {
+          this.controller.handleExpandSelected();
+          this.expandBtn.classList.add("hide");
+          this.contractBtn.classList.remove("hide");
+        });
+    }
     this.contractBtn.addEventListener("click", () => {
       this.controller.handleContractSelected();
       this.expandBtn.classList.remove("hide");

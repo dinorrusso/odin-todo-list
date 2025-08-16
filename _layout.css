@@ -250,3 +250,75 @@
   font-size: 1rem;
   color: white;
 }
+/* 
+////////////////////////////////////////////////////////////////////////////////////
+*/
+@media screen and (max-width: 600px) {
+/* Mobile-specific styles go here */
+.app-container {
+flex-direction: column;
+}
+.sidebar,
+.main,
+.detail-panel {
+position: absolute;
+width: 100vw;
+}
+.sidebar {
+transform: translateX(0); /* Make the sidebar visible by default on mobile */
+z-index: 100;
+}
+.sidebar.closed {
+transform: translateX(-100%);
+}
+.detail-panel {
+transform: translateX(100%);
+z-index: 200;
+}
+.detail-panel.open {
+transform: translateX(0);
+}
+.main-content button #contract {
+display: none;
+}
+.main {
+  padding: 1rem;
+  width: 100%; /* Ensure main container fits within viewport */
+  box-sizing: border-box; /* Include padding in the element's total width */
+}
+.main .todo {
+  /* Use flexible units and percentages */
+    width: 90%; /* Take up the full width of its parent (.main) */
+    grid-template-columns: 40px 1fr 40px 40px; 
+    column-gap: 5px; 
+    margin-bottom: 1rem; 
+    padding: 10px; 
+    font-size: 1rem;
+}
+  /* Adjust the size of the icons and text if necessary */
+.todo span.material-symbols-outlined {
+  font-size: 20px;
+}
+.main .addtask {
+    flex-direction: row; /* Stack the input and button vertically */
+    font-size: 1rem;
+    gap: 5px; /* Adjust gap for spacing */
+    padding: .5rem;
+    width: 100%; /* Ensure the addtask container takes up full width */
+    box-sizing: border-box;
+  }
+
+.main .addtask .large-icon {
+  font-size: 1rem;
+}
+.addtask input {
+  width: 100%; /* Ensure the input takes up full width */
+  box-sizing: border-box;
+}
+.task-list-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem; /* Adjust font size to fit */
+  }
+}

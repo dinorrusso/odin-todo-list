@@ -9,10 +9,12 @@ import { ToDoItem, Subtask } from "./to-do-item.js";
 
 export class TodoAppController {
     constructor() {
+        this.isMobile = window.matchMedia("(max-width: 600px)").matches;
         this.dataService = new DataService();
         this.sidebarView = new SidebarView(this.dataService, this); // Pass reference to itself
         this.mainContentView = new MainContentView(this.dataService, this);
         this.detailView = new DetailView(this.dataService, this);
+        
         this.init();
     }
 
@@ -28,7 +30,11 @@ export class TodoAppController {
     }
     // Method called by the SidebarView when a list is selected
     handleListSelected(listName) {
+      console.log('in handleListSelected isMobile:', this.isMobile);
         this.dataService.setActiveListName(listName);
+        if (this.isMobile){
+          this.sidebarView.hideSidebar();
+        }
         this.mainContentView.renderActiveList();
         this.detailView.hideDetailPanel();
        
@@ -43,6 +49,7 @@ export class TodoAppController {
     }
     // Method called by the MainContentView when a todo item is selected
     handleTodoItemSelected(todoItem) {
+
         this.detailView.renderToDoItem(todoItem);
     }
     // Method called by the MainContentView or Detail View when a todo item is deleted
@@ -71,6 +78,7 @@ export class TodoAppController {
     }
     //methods called by MainContentView when expand/contract selected
     handleExpandSelected(){
+
         this.sidebarView.hideSidebar();
     }
     handleContractSelected(){
