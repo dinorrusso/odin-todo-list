@@ -34,7 +34,6 @@ export class ToDoList {
      this.#todos.forEach((item) => {
         item.setTag(name);
     });
-    console.log('after setName : ', name, this.#todos);
   }
 
   getId() {

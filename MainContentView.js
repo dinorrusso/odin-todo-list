@@ -1,6 +1,7 @@
 //MainContentView.js
 
 import { ToDoItem } from "./to-do-item.js";
+import { getFormattedDate } from "./UtilityFunctions.js";
 
 export class MainContentView {
   constructor(dataService, controller) {
@@ -12,6 +13,7 @@ export class MainContentView {
     this.renderEmptyMainView();
     
     this.taskListTitle;
+    this.mydaydateText;
     this.actionDiv;
     this.todoCollection;
     this.expandBtn;
@@ -30,6 +32,14 @@ export class MainContentView {
     actionDiv.textContent = "edit";
     headerDiv.appendChild(actionDiv);
     this.actionDiv = actionDiv;
+    //
+    const mydaydateDiv = document.createElement('div');
+    mydaydateDiv.className = "mydaydate";
+    mydaydateDiv.textContent =  "";
+    this.mydaydateText = mydaydateDiv;
+    headerDiv.appendChild(mydaydateDiv);
+
+    //
     return headerDiv;
   }
   renderEmptyMainView() {
@@ -74,19 +84,19 @@ export class MainContentView {
     span.textContent = "Add an Item";
     addTaskDiv.appendChild(span);
     //add the event listener
-    addTaskDiv.addEventListener("click", (event) => {
-        console.log('in add item click :', event);
+    addTaskDiv.addEventListener("click", () => {
         this.controller.handleAddItem();
     });
     this.mainBottom.appendChild(addTaskDiv);
   }
-
   //common activity to render the current (i.e. active) list
   renderActiveList() {
     const activeTodoListName = this.dataService.getActiveListName();
     this.clearToDoCollection();
     this.taskListTitle.textContent = activeTodoListName;
-
+    if (activeTodoListName === 'My Day'){
+      this.taskListTitle.textContent += " (" + getFormattedDate() + ")";
+      }
     const todos = this.dataService.getNamedList(activeTodoListName);
     todos.forEach((item, index) => {
       this.addTodoItemToView(item);
@@ -107,7 +117,6 @@ export class MainContentView {
     }
 
   }
-
   //populate the ui with the to do items
   addTodoItemToView(item) {
     let todoDiv = document.createElement("div");
@@ -117,6 +126,15 @@ export class MainContentView {
     span.classList = "material-symbols-outlined large-icon done";
     span.textContent = item.isDone() ? "check_circle" : "circle";
     todoDiv.appendChild(span);
+    //
+    span.addEventListener("click", (event) => {
+      event.stopPropagation();
+      item.toggleDone();
+      this.controller.handleToDoItemStateChanged(item);
+    });
+
+
+    //
     span = document.createElement("span");
     span.classList = 'description"';
     span.textContent = item.getTitle();
@@ -135,7 +153,7 @@ export class MainContentView {
       // logic here for toggle important
       const todoItem = this.dataService.getTodoById(parent.id);
       todoItem.toggleImportant();
-      this.controller.handleToDoItemStateChanged();
+      this.controller.handleToDoItemStateChanged(todoItem);
     });
 
     todoDiv.appendChild(span);
@@ -155,7 +173,6 @@ export class MainContentView {
     todoDiv.appendChild(span);
     this.todoCollection.appendChild(todoDiv);
   }
-
   // clear the ui
   clearToDoCollection() {
     this.todoCollection.innerHTML = "";
@@ -177,8 +194,7 @@ export class MainContentView {
   //Main Content View Event Handlers
   setupEventListeners() {
     // edit the Task List name
-    this.actionDiv.addEventListener('click', (event) => {
-      console.log('in edit event for Title', event);
+    this.actionDiv.addEventListener('click', () => {
       this.controller.handleRenameList();
     });
 

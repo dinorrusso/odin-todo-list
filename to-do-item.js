@@ -29,6 +29,7 @@ export class ToDoItem {
     this.#tag = tag;
     this.#title = title;
     this.#id = crypto.randomUUID();
+    this.#dueDate = "";
   }
   toJSON() {
     // Return a plain object with all the data needed to recreate the item
@@ -59,6 +60,12 @@ export class ToDoItem {
   isImportant() {
     return this.#important;
   }
+  getImportant() {
+    return this.#important;
+  }
+  setImportant(booleanFlag) {
+    this.#important = booleanFlag;
+  }
   isMyDay() {
     return this.#myday;
   }
@@ -66,11 +73,20 @@ export class ToDoItem {
   setMyDay(booleanFlag){
     this.#myday = booleanFlag;
   }
+  setDone(booleanFlag){
+    this.#done = booleanFlag;
+  }
   isDone() {
     return this.#done;
   }
   toggleImportant() {
     this.#important = !this.#important;
+  }
+  toggleDone() {
+    this.#done = !this.#done;
+  }
+  toggleMyDay() {
+    this.#myday = !this.#myday;
   }
   getNote() {
     return this.#note;

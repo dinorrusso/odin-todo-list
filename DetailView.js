@@ -1,5 +1,10 @@
 //DetailView.js
 import { ToDoItem, Subtask } from "./to-do-item.js";
+import { ModalView } from "./ModalViews.js";
+
+const TEXT_AREA_ROWS = 5;
+const TEXT_AREA_COLS = 40;
+
 export class DetailView {
     constructor(dataService, controller) {
         this.controller = controller;
@@ -8,6 +13,10 @@ export class DetailView {
         this.renderDetailPanel();
         this.setupEventListeners();
         this.todoItem;
+        this.dateText;
+    }
+    isOpen(){
+        return this.detailPanel.className.includes("open");
     }
     renderDetailPanel() {
         const detailPanel = document.querySelector('.detail-panel');
@@ -33,6 +42,11 @@ export class DetailView {
 
         // Append everything
         closeButton.appendChild(iconSpan);
+        // Add event listener for the close button
+        closeButton.addEventListener('click', () => {
+            // Logic to close the detail view
+            this.hideDetailPanel();
+        });
         detailBottomDiv.appendChild(closeButton);
         //new 
         const trashButton = document.createElement('button');
@@ -43,43 +57,26 @@ export class DetailView {
         trashIconSpan.className = 'material-symbols-outlined large-icon';
         trashIconSpan.textContent = 'delete';
         trashButton.appendChild(trashIconSpan);
-        detailBottomDiv.appendChild(trashButton);
-    
-
-
-        //end new
-        detailPanel.appendChild(detailContentDiv);
-        detailPanel.appendChild(detailBottomDiv);
-
-        // Add event listener for the close button
-        closeButton.addEventListener('click', () => {
-            // Logic to close the detail view
-            this.hideDetailPanel();
-        });
-
-        // Add event listener for the trash button
-        trashButton.addEventListener('click', (event) => {
-            // delete todo item
-            console.log('in trashButton event item:', this.todoItem);
-            this.dataService.deleteTodoById(this.todoItem.getId());
+        trashIconSpan.addEventListener('click', (event) => {
             this.controller.handleTodoItemDeleted(this.todoItem);
         });
-        
+        detailBottomDiv.appendChild(trashButton)
+        detailPanel.appendChild(detailContentDiv);
+        detailPanel.appendChild(detailBottomDiv);
     }
-
     hideDetailPanel(){
+        //takes off open in ClassName
         this.detailPanel.className = "detail-panel";
-        //takes off open
     }
     setupEventListeners() {
         //close DetailView
         const closeDetailPanelBtn = document.getElementById("close-detail");
         closeDetailPanelBtn.addEventListener("click", () => {
             const detailPanel = document.querySelector(".detail-panel");
+            //takes off open in ClassName
             detailPanel.className = "detail-panel";
         });
     }
-
     //common activity to render the todoItem clicked on
     renderToDoItem(item) {
         //open the panel
@@ -96,8 +93,6 @@ export class DetailView {
         detailContent.appendChild(this.renderDueDate(item));
         detailContent.appendChild(this.renderNote(item));
     }
-        
-
     renderToDoItemHeading(item){
         //Render the To Do Item heading
         // done indicator, title, and important indicator
@@ -111,7 +106,8 @@ export class DetailView {
         span.textContent = item.isDone() ? "check_circle" : "circle";
         //handle toggle done
         span.addEventListener("click", () => {
-            console.log('in mark done: item:', item);
+            item.toggleDone();
+            this.controller.handleToDoItemStateChanged(item);
         });
         //title
         todoItemTitleDiv.appendChild(span);
@@ -126,13 +122,16 @@ export class DetailView {
         if (item.isImportant()) {
             span.classList.add("filled-icon");
         }
+        span.addEventListener("click", (event) => {
+            item.toggleImportant();
+            this.controller.handleToDoItemStateChanged(item);
+    });
         todoItemTitleDiv.appendChild(span);
         return todoItemTitleDiv;
     }
     renderSubtasksSection(item){
         const subtaskDiv = document.createElement("div");
         subtaskDiv.classList = "subtasks"
-        console.log('in render subtasks item:', item);
         if (item.getSubtasks().length === 0){
             //no subtasks found - render a + Next Step 
             let div = document.createElement("div");
@@ -146,7 +145,7 @@ export class DetailView {
             subtaskDiv.appendChild(div);
             //handle toggle done
             subtaskDiv.addEventListener("click", () => {
-                console.log('in add subtask: item:', item);
+                this.handleAddSubtask(item);
                 });
         }else {
             //there are 1 or more subtasks to show
@@ -155,7 +154,6 @@ export class DetailView {
             // let div = document.createElement("div");
             // div.classList = 'subtask';
             subs.forEach((s, index) => {
-                console.log('s= ', s);
                 let div = document.createElement("div");
                 div.classList = 'subtask';
                 let span = document.createElement("span");
@@ -164,7 +162,8 @@ export class DetailView {
                 div.appendChild(span);
                 //handle toggle done
                 span.addEventListener("click", () => {
-                    console.log('in subtask done: s:', s);
+                    s.done = !s.done;
+                    this.controller.handleToDoItemStateChanged(item);
                     });
                 span = document.createElement("span");
                 span.textContent = s.name;
@@ -180,6 +179,10 @@ export class DetailView {
                 span = document.createElement("span");
                 span.textContent = 'Next Subtask';
                 div.appendChild(span);
+                span.addEventListener("click", () => {
+                    this.handleAddSubtask(item);
+                    
+                    });
                 subtaskDiv.appendChild(div);
             
             }
@@ -188,15 +191,25 @@ export class DetailView {
         }
     renderAddToMyDay(item){
         const myDayDiv = document.createElement("div");
+        let text = "Add to My Day";
         myDayDiv.classList = "myday add";
         myDayDiv.dataset.mydata = item.getId();
         let span = document.createElement("span"); 
-        span.classList = "material-symbols-outlined large-icon";
+        if (item.isMyDay()) {
+            span.classList = "material-symbols-outlined large-icon myday-set";
+            text = "Added to My Day"
+            } else {
+                span.classList = "material-symbols-outlined large-icon myday-not-set";
+            }
         span.textContent = "sunny";
         myDayDiv.appendChild(span);
         span = document.createElement("span"); 
-        span.textContent = "Add to My Day";
+        span.textContent = text;
         myDayDiv.appendChild(span);
+        myDayDiv.addEventListener("click", () => {
+            item.toggleMyDay();
+            this.controller.handleToDoItemStateChanged(item);
+            });
         return myDayDiv;
     }
     renderDueDate(item){
@@ -208,11 +221,29 @@ export class DetailView {
         span.textContent = "calendar_today";
         dueDateDiv.appendChild(span);
         span = document.createElement("span"); 
-        span.textContent = "Add Due Date";
+        if(item.getDueDate()){
+            span.textContent = "Due: " + item.getDueDate();
+        }else{
+            span.textContent = "Add Due Date";
+        }
+        this.dateText = span;
         dueDateDiv.appendChild(span);
+        const dateInput = document.createElement("input");
+        dateInput.className = "transparent-date";
+        dateInput.id = "realDateInput";
+        dateInput.type = "date";
+        dateInput.addEventListener('change', (event) => {
+            const selectedDate = event.target.value;
+            item.setDueDate(selectedDate);
+            this.dateText = "Due: " + selectedDate;
+            this.controller.handleToDoItemStateChanged(item);
+            });
+        dueDateDiv.appendChild(dateInput);
+        dueDateDiv.addEventListener("click", () => {
+            dateInput.showPicker();
+        });
         return dueDateDiv;
     }        
-
     renderNote(item){
         const noteTextAreaDiv = document.createElement("div");
         noteTextAreaDiv.className ="text-area-div";
@@ -223,15 +254,33 @@ export class DetailView {
         noteTextArea.classList = "note";
         noteTextArea.id = item.getId();
         noteTextArea.name = "todo-note";
-        noteTextArea.rows = 5;
-        noteTextArea.cols = 40;
+        noteTextArea.rows = TEXT_AREA_ROWS;
+        noteTextArea.cols = TEXT_AREA_COLS;
         noteTextArea.value = item.getNote();
         noteTextAreaDiv.appendChild(noteTextArea);
-        noteTextArea.addEventListener("change", (event) => {
-                    console.log('in note change: ', event);
+        noteTextArea.addEventListener("change", () => {
+                    item.addNote(noteTextArea.value);
+                    this.controller.handleToDoItemStateChanged(item);
                     });
         return noteTextAreaDiv;
     }  
+    handleAddSubtask(item) {
+        const contentHtml = `
+          <input type="text" class="modal-input" placeholder="Enter new list name...">
+        `;
+    
+        // The callback function will be executed when the user clicks 'Save'
+        const onSaveCallback = (subtaskName) => {
+          if (subtaskName) {
+            //create a subtask
+            const st = new Subtask(subtaskName);
+            item.addSubtask(st);
+            this.controller.handleToDoItemStateChanged(item);
+          }
+        };
+    
+        new ModalView("New Subtask", contentHtml, onSaveCallback);
+      }
 }
 
         

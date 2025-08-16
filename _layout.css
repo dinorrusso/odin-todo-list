@@ -100,12 +100,7 @@
   cursor: pointer;
 }
 
-/* .detail-panel
-  .detail-bottom
-  button#delete-todo
-  span.material-symbols-outlined.large-icon {
-  font-size: 36px;
-} */
+
 .user-list {
   display: grid;
   padding: 5px;
@@ -140,8 +135,6 @@
   padding: 24px 16px;
   grid-template-columns: 4rem 1fr 4rem;
   align-items: center;
-  /* margin-bottom: 0.5rem; */
-  /* background: white; */
   font-size: 1.5rem;
   font-weight: 500;
   /* color: black; */
@@ -164,17 +157,13 @@
 .subtasks {
   display: flex;
   flex-direction: column;
-  /* gap: 15px; */
-
 }
 .subtask {
   display: grid;
-  /* padding-top: 8px; */
   padding-bottom: 8px;
   padding-left: 25px;
   grid-template-columns: 4rem 1fr;
   align-items: center;
-  /* margin-bottom: 0.5rem; */
   font-size: 1.25rem;
   font-weight: 300;
   color: var(--subtask-color);
@@ -205,7 +194,6 @@
   padding-left: 25px;
   grid-template-columns: 4rem 1fr 4rem;
   align-items: center;
-  /* margin-bottom: 0.5rem; */
   font-size: 1.25rem;
   font-weight: 300;
   color: var(--subtask-color);
@@ -251,4 +239,14 @@
   resize: none;
   padding: 16px;               
   box-sizing: border-box; 
+}
+.myday-set {
+  color: var(--myday-color);
+}
+.myday-not-set {
+  color: var(--subtask-color);
+}
+.mydaydate {
+  font-size: 1rem;
+  color: white;
 }

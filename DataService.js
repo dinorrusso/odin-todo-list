@@ -11,7 +11,6 @@ export class DataService {
     this.activeTodoListName;
     this.initializeData();
   }
-
   initializeData() {
     if (localStorage.getItem("todoListCollection") === null) {
       //no persistent data - generate test data
@@ -24,41 +23,29 @@ export class DataService {
       this.getPersistentData();
     }
   }
-
-  //
   deleteListById(id) {
-      // Filter the todoListCollection to create a new array
-      // that includes all lists except the one with the matching id.
-      this.todoListCollection = this.todoListCollection.filter(
-        (list) => list.getId() !== id
-      );
-      // After modifying the collection, save the updated data to local storage.
-      this.savePersistentData();
+    // Filter the todoListCollection to create a new array
+    // that includes all lists except the one with the matching id.
+    this.todoListCollection = this.todoListCollection.filter(
+      (list) => list.getId() !== id
+    );
+    // After modifying the collection, save the updated data to local storage.
+    this.savePersistentData();
   }
-  //
-    renameList(thisList){
-      
-    }
-
-
   getAllItems() {
     return this.todoListCollection.flatMap((list) => list.getToDoItems());
   }
-
   getTodoListCollection() {
     return this.todoListCollection;
   }
-
   getActiveListName() {
     return this.activeTodoListName;
   }
-
   setActiveListName(name) {
     this.activeTodoListName = name;
     this.savePersistentData();
     this.getPersistentData();
   }
-
   addNewList(name) {
     const newList = new ToDoList(name);
     this.todoListCollection.push(newList);
@@ -66,16 +53,12 @@ export class DataService {
     this.getPersistentData();
     return newList;
   }
-
   getTaskList() {
     return this.todoListCollection.find((list) => list.getName() === "Tasks");
   }
-  getListByName(name){
-    console.log('in getListByName name: ', name);
-    console.log(this.todoListCollection.find((list) => list.getName() === name));
+  getListByName(name) {
     return this.todoListCollection.find((list) => list.getName() === name);
   }
-
   getNamedList(name) {
     const allItems = this.getAllItems();
     let list;
@@ -94,7 +77,6 @@ export class DataService {
     }
     return list;
   }
-
   getFilteredToDoList(name) {
     const allLists = this.getTodoListCollection();
     const allItems = allLists.flatMap((list) => list.getToDoItems());
@@ -113,15 +95,12 @@ export class DataService {
 
     return filteredList;
   }
-
   getTodoById(id) {
-    console.log('in TodoById id', id);
     const allLists = this.getTodoListCollection();
     const allItems = allLists.flatMap((list) => list.getToDoItems());
     const todoItem = allItems.find((item) => item.getId() === id);
     return todoItem;
   }
-  
   deleteTodoById(id) {
     //need to know what list it is in
     const todoItemToDelete = this.getTodoById(id);
@@ -137,10 +116,6 @@ export class DataService {
     localStorage.setItem(
       "activeTodoListName",
       JSON.stringify(this.activeTodoListName)
-    );
-    console.log(
-      "exiting savePersistentData.  this.todoListCollection",
-      this.todoListCollection
     );
   }
   getPersistentData() {
@@ -160,12 +135,9 @@ export class DataService {
             // Manually restore all other properties from the saved data
             revivedItem.id = itemData.id; // Restore original ID
             revivedItem.setMyDay(itemData.myDay);
-            if (itemData.important) {
-              revivedItem.toggleImportant();
-            }
-            revivedItem.setDueDate(
-              itemData.dueDate ? new Date(itemData.dueDate) : null
-            );
+            revivedItem.setDone(itemData.done);
+            revivedItem.setImportant(itemData.important);
+            revivedItem.setDueDate(itemData.dueDate);
             revivedItem.addNote(itemData.note);
 
             // Revive the nested subtasks

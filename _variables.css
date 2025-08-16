@@ -22,6 +22,7 @@
   --main-task-text-color: black;
   --sidebar-bg: #e8e7e7;
   --sidebar-text: black;
+  --myday-color: #faaa15ff;
   --detail-bg: white;
   --detail-text-color: black;
   --selected-list-bg: border: 4px solid var(--todo-selection-border); /* thickness, style, color */
@@ -55,7 +56,7 @@
     --main-task-text-color: white;
     --add-task-bg-color: #373835;
     --add-task-text-color: white;
-    
+    --myday-color: #faaa15ff;
     --main-area-bg: #1e1e1e;
     --sidebar-bg: #2b2a28;
     --sidebar-text: #ebebeb;

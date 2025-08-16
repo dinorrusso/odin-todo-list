@@ -20,15 +20,12 @@ export class TodoAppController {
         this.dataService.initializeData();
         this.mainContentView.renderActiveList();
     }
-    // Method called by the SidebarView when a list is deleted
+    // Method called by the SidebarView when a list is deleted NEEDS WORK
     handleListDeleted(listId){
-        console.log('in handleListDeleted listID:', listId )
         this.dataService.deleteListById(listId);
         location.reload();
 
     }
-
-
     // Method called by the SidebarView when a list is selected
     handleListSelected(listName) {
         this.dataService.setActiveListName(listName);
@@ -36,7 +33,6 @@ export class TodoAppController {
         this.detailView.hideDetailPanel();
        
     }
-    
     // Method called by the SidebarView when a new list is created
     handleNewListCreated(newList) {
         this.dataService.addNewList(newList);
@@ -49,17 +45,29 @@ export class TodoAppController {
     handleTodoItemSelected(todoItem) {
         this.detailView.renderToDoItem(todoItem);
     }
+    // Method called by the MainContentView or Detail View when a todo item is deleted
     handleTodoItemDeleted(todoItem) {
+        this.dataService.deleteTodoById(todoItem.getId());
         this.dataService.savePersistentData();
-        location.reload();
+        this.sidebarView.renderSidebar()
+        this.mainContentView.renderActiveList();
+        this.detailView.hideDetailPanel();
+        //location.reload();
        
         
     }
-    handleToDoItemStateChanged(){
-        //need to refresh the sidebar, maincontent, and possibly detail panel
+    // Method called by the MainContentView or Detail View when a todo item state is changed
+    handleToDoItemStateChanged(item){
+        //need to refresh the sidebar, maincontent, and detail panel
         //save the state and reload
         this.dataService.savePersistentData();
-        location.reload();
+        //this.dataService.getPersistentData();
+        this.sidebarView.renderSidebar()
+        this.mainContentView.renderActiveList();
+        if (this.detailView.isOpen()) {
+          this.detailView.renderToDoItem(item);
+        }
+        
     }
     //methods called by MainContentView when expand/contract selected
     handleExpandSelected(){
@@ -68,10 +76,8 @@ export class TodoAppController {
     handleContractSelected(){
         this.sidebarView.showSidebar();
     };
-
-
+  //modal for a new ToDo
   handleAddItem() {
-    console.log('in handleAddItem');
     const contentHtml = `
       <input type="text" class="modal-input" placeholder="Enter item name...">
     `;
@@ -117,9 +123,7 @@ export class TodoAppController {
 
     new ModalView("Add New To-Do Item", contentHtml, onSaveCallback);
   }
-
-
-  //
+  //modal for renaming a ToDo
   handleRenameList() {
     const contentHtml = `
       <input type="text" class="modal-input" placeholder="Enter new list name...">

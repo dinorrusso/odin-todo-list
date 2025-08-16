@@ -11,7 +11,7 @@ export class SidebarView{
         this.newListDialog = document.getElementById('newListDialog');
         this.newListDialog = this.createDialog(); // Create the dialog and store it
         document.body.appendChild(this.newListDialog); // Append it to the body
-        this.setupUiElements();
+        this.renderSidebar();
         this.setupEventListeners();
     }
 
@@ -22,7 +22,9 @@ export class SidebarView{
       this.sidebar.classList.add("closed");
     }
     
-    setupUiElements(){
+    renderSidebar(){
+      this.predefinedListsContainer.innerHTML = "";
+      this.userListsContainer.innerHTML = "";
       const allItems = this.dataService.getAllItems();//get all To Do Items
       // Add the predefined filter views to the UI
       this.addPreDefinedList("My Day", "sunny", "#faaa15ff", allItems.filter(item => item.isMyDay()).length);
@@ -148,8 +150,6 @@ export class SidebarView{
         spanElement.addEventListener("click", (event) => {
           
           const parent = event.target.parentElement;
-          console.log('trash clicked - parent : ', parent);
-          console.log('trash clicked - parent id : ', parent.id);
           event.stopPropagation();
           this.controller.handleListDeleted(parent.id);
           
