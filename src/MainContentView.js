@@ -126,6 +126,9 @@ export class MainContentView {
 
         console.log('addtasks:', addTasks);
         addTasks.style.visibility = 'hidden';
+        if(activeTodoListName === "Tasks"){
+          addTasks.style.visibility = 'visible';
+        }
         break;
       default:
         //editable

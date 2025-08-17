@@ -1,0 +1,346 @@
+/* _layout.css */
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+#manage-display{
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer; /* Show pointer cursor on hover */
+}
+.material-symbols-outlined.large-icon.expand-contract {
+  font-size: 64px;
+}
+.sidebar {
+  flex: 0 0 25vw;
+  transition: transform 0.3s ease, flex-basis 0.3s ease;
+  background: var(--sidebar-bg);
+}
+.main {
+  flex: 1 1 auto;
+  transition: width 0.3s ease;
+  z-index: 1;
+  background: var(--main-area-bg);
+  padding: 2rem;
+}
+
+.detail-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 25vw; /* Or any width you like */
+  height: 100%;
+  background: var(--detail-bg);
+  color: var(--detail-text-color);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.4);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+.detail-panel.open {
+  transform: translateX(0);
+}
+.detail-content {
+  flex: 1 1 auto; /* take remaining space */
+  overflow-y: auto; /* scroll if content is long */
+}
+.detail-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* flex-shrink: 0; do not shrink */
+  /* optionally add background, padding, border */
+}
+
+.sidebar,
+.main,
+.detail-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* fill vertical viewport */
+}
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* take remaining space */
+  /* overflow-y: auto;  */
+  /* flex: 1 1 auto; 
+  overflow-y: auto;  */
+}
+.sidebar-bottom {
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* take remaining space */
+  overflow-y: auto; /* scroll if content is long */
+}
+
+.main-bottom {
+  flex-shrink: 0; /* do not shrink */
+  margin-bottom: 2rem;
+}
+.hide {
+  display: none;
+}
+
+
+.sidebar.closed {
+  transform: translateX(-100%);
+  flex-basis: 0; /* collapse actual space taken */
+  overflow: hidden; /* optional */
+}
+.detail-panel
+  .detail-bottom
+  button#close-detail
+  span.material-symbols-outlined.large-icon,
+  .detail-panel
+  .detail-bottom
+  button#delete-todo
+  span.material-symbols-outlined.large-icon  {
+  font-size: 48px;
+  cursor: pointer;
+}
+
+
+.user-list {
+  display: grid;
+  padding: 5px;
+  grid-template-columns: 4rem 30ch 2rem 2rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  /* background: white; */
+  font-size: 1.25rem;
+  color: var(--sidebar-text);
+}
+
+.user-list:hover {
+  cursor: pointer;
+}
+.user-list > :nth-child(1) {
+  justify-self: center; /* horizontally center content in 1st column */
+  align-self: center; /* vertically center content */
+}
+.user-list.selected {
+  background-color: var(--selected-list-bg);
+}
+.user-list span.material-symbols-outlined.large-icon {
+  font-size: 2rem;
+  color: #5467ae;
+}
+.user-list span.name {
+  font-size: 1.5 rem;
+}
+.todo-detail {
+  display: grid;
+  padding-left: 25px;
+  padding: 24px 16px;
+  grid-template-columns: 4rem 1fr 4rem;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  /* color: black; */
+
+}
+/* First column cell */
+.todo-detail > :nth-child(1) {
+  justify-self: center;
+}
+
+/* Second column cell */
+.todo-detail > :nth-child(2) {
+  justify-self: start; /* left align */
+}
+
+/* Third column cell */
+.todo-detail > :nth-child(3) {
+  justify-self: center;
+}
+.subtasks {
+  display: flex;
+  flex-direction: column;
+}
+.subtask {
+  display: grid;
+  padding-bottom: 8px;
+  padding-left: 25px;
+  grid-template-columns: 4rem 1fr;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--subtask-color);
+}
+/* First column cell */
+.subtask > :nth-child(1) {
+  justify-self: center;
+}
+
+/* Second column cell */
+.subtask > :nth-child(2) {
+  justify-self: start; /* left align */
+}
+/* ... (all your existing code) ... */
+.next-subtask,
+.add-subtask {
+  color: var(--subtask-action);
+}
+.delete,
+.important {
+  cursor: pointer;
+}
+.subtask.add-subtask,
+.myday.add,
+.subtask.next-subtask {
+  display: grid;
+  padding: 16px 16px;
+  padding-left: 25px;
+  grid-template-columns: 4rem 1fr 4rem;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--subtask-color);
+  outline: 1px solid var(--detail-action-border); /* thickness, style, color */
+  cursor: pointer;
+}
+.myday.add > :nth-child(1) {
+  justify-self: center;
+}
+.isdone,
+.isimportant,
+.subtaskdone {
+  cursor: pointer;
+}
+
+.text-area-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-area-div span {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--subtask-color);
+  background: var(--detail-bg);
+  border-top: 1px solid var(--detail-action-border); 
+  padding-top: 6px;           
+  margin-bottom: 6px; 
+  padding-left: 16px;  
+  display: block;            
+}
+
+.text-area-div textarea.note {
+  background: var(--detail-bg);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--subtask-color);
+  border: none;              
+  border-bottom: 1px solid var(--detail-action-border); 
+  outline: none;         
+  width: 100%;      
+  resize: none;
+  padding: 16px;               
+  box-sizing: border-box; 
+}
+.myday-set {
+  color: var(--myday-color);
+}
+.myday-not-set {
+  color: var(--subtask-color);
+}
+.mydaydate {
+  font-size: 1rem;
+  color: white;
+}
+/* 
+////////////////////////////////////////////////////////////////////////////////////
+*/
+@media screen and (max-width: 600px) {
+/* Mobile-specific styles go here */
+.app-container {
+flex-direction: column;
+}
+.sidebar,
+.main,
+.detail-panel {
+position: absolute;
+width: 100vw;
+}
+.sidebar {
+transform: translateX(0); /* Make the sidebar visible by default on mobile */
+z-index: 100;
+}
+.sidebar.closed {
+transform: translateX(-100%);
+}
+.detail-panel {
+transform: translateX(100%);
+z-index: 200;
+}
+.detail-panel.open {
+transform: translateX(0);
+}
+.main-content button #contract {
+display: none;
+}
+.main {
+  display: grid;
+  grid-template-rows: 1fr auto; /* The first row takes up all available space (1fr), and the second row (for addtask) takes up only as much space as it needs (auto) */
+  height: 100vh; /* Set a specific height for the grid container to work properly */
+  box-sizing: border-box;
+  padding: 1rem;
+}
+.main-content {
+  overflow-y: auto; /* Enable scrolling for the task list if it overflows */
+}
+.main-content .todo-collection {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This will center the todo items horizontally */
+  }
+.main .todo {
+  /* Use flexible units and percentages */
+    width: 90%; /* Take up the full width of its parent (.main) */
+    grid-template-columns: 40px 1fr 40px 40px; 
+    column-gap: 5px; 
+    margin-bottom: 1rem; 
+    padding: 10px; 
+    font-size: 1rem;
+}
+  /* Adjust the size of the icons and text if necessary */
+.todo span.material-symbols-outlined {
+  font-size: 20px;
+}
+.main .addtask {
+  margin-top: auto; /* Push the element to the bottom of the grid row */
+  align-self: end; /* Align it to the end of the grid cell */
+  flex-direction: row;
+  /* gap: 10px; */
+  width: 95%;
+  font-size: 1rem;
+  padding: .5rem;
+  }
+
+.main .addtask .large-icon {
+  font-size: 1rem;
+}
+.addtask input {
+  width: 100%; /* Ensure the input takes up full width */
+  box-sizing: border-box;
+}
+.task-list-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem; /* Adjust font size to fit */
+  }
+.material-symbols-outlined.large-icon.expand-contract {
+  font-size: 36px;
+}
+}
