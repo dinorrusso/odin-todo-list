@@ -78,11 +78,26 @@ export class TodoAppController {
     }
     //methods called by MainContentView when expand/contract selected
     handleExpandSelected(){
-
-        this.sidebarView.hideSidebar();
+      const span = document.querySelector("#manage-display .material-symbols-outlined"); // Get the span
+        if (this.sidebarView.isVisible)
+          {
+              this.sidebarView.hideSidebar();
+              //if we are fullscreen we need to flip the chevron
+              if(!window.matchMedia("(max-width: 600px)").matches){
+                span.textContent = "chevron_right";
+              }
+          }else
+            {
+              this.sidebarView.showSidebar();
+              //if we are fullscreen we need to flip the chevron back
+              if(!window.matchMedia("(max-width: 600px)").matches){
+                span.textContent = "chevron_left";
+              }
+            }
     }
-    handleContractSelected(){
-        this.sidebarView.showSidebar();
+
+    handleNewTodoCreated(){
+        this.mainContentView.renderActiveList();
     };
   //modal for a new ToDo
   handleAddItem() {
@@ -124,7 +139,7 @@ export class TodoAppController {
             }
         
         this.dataService.savePersistentData();
-        location.reload();
+        this.handleNewTodoCreated();
 
       }
     };

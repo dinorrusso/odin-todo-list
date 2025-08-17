@@ -16,6 +16,7 @@ export class MainContentView {
     this.mydaydateText;
     this.actionDiv;
     this.todoCollection;
+    this.mainContentDisplayButton;
     this.expandBtn;
     this.contractBtn;
     this.setupEventListeners();
@@ -43,28 +44,36 @@ export class MainContentView {
     return headerDiv;
   }
   renderEmptyMainView() {
-    //expand/contract buttons
-    let span;
-    if(!this.controller.isMobile){
-        console.log('in renderEmptyMainView() is', this.controller.isMobile);
-        const expandButton = document.createElement("button");
-        expandButton.id = "expand";
-        span = document.createElement("span");
-        span.className = "material-symbols-outlined large-icon";
-        span.textContent = "expand_content";
-        expandButton.appendChild(span);
-        this.mainContent.appendChild(expandButton);
-        this.expandBtn = expandButton;
-      }
-    const contractButton = document.createElement("button");
-    contractButton.id = "contract";
-    // contractButton.className = "hide";
-    span = document.createElement("span");
-    span.className = "material-symbols-outlined large-icon";
-    span.textContent = "collapse_content";
-    contractButton.appendChild(span);
-    this.mainContent.appendChild(contractButton);
-    this.contractBtn = contractButton;
+    //place the button for managing display
+    const mainContentDisplayButton = document.createElement("button");
+    mainContentDisplayButton.id = "manage-display";
+    let span = document.createElement("span");
+    span.className = "material-symbols-outlined large-icon expand-contract";
+    span.textContent = "chevron_left";
+    mainContentDisplayButton.appendChild(span);
+    this.mainContentDisplayButton = mainContentDisplayButton;
+    this.mainContent.appendChild(mainContentDisplayButton);
+    // let span;
+    
+    // console.log('in renderEmptyMainView() is', this.controller.isMobile);
+    // const expandButton = document.createElement("button");
+    // expandButton.id = "expand";
+    // span = document.createElement("span");
+    // span.className = "material-symbols-outlined large-icon";
+    // span.textContent = "chevron_left";
+    // expandButton.appendChild(span);
+    // this.mainContent.appendChild(expandButton);
+    // this.expandBtn = expandButton;
+      
+    // const contractButton = document.createElement("button");
+    // contractButton.id = "contract";
+    // // contractButton.className = "hide";
+    // span = document.createElement("span");
+    // span.className = "material-symbols-outlined large-icon";
+    // span.textContent = "chevron_right";
+    // contractButton.appendChild(span);
+    // this.mainContent.appendChild(contractButton);
+    // this.contractBtn = contractButton;
 
     //Title area
     this.mainContent.appendChild(this.taskListHeader);
@@ -111,7 +120,11 @@ export class MainContentView {
       case "Important":
       case "Planned":
       case "Tasks":
+        console.log('in case: name:', activeTodoListName);
         this.actionDiv.className = "material-symbols-outlined large-icon hide";
+        const addTasks = document.querySelector('.addtask')
+        console.log('addtasks:', addTasks);
+        addTasks.style.visibility = 'hidden';
         break;
       default:
         //editable
@@ -206,7 +219,13 @@ export class MainContentView {
       // ... logic to open the detail view panel
       // and display content
     });
+    this.mainContentDisplayButton.addEventListener("click", () => {
+        this.controller.handleExpandSelected();
+    });
+
+
     // events for making task list expand/contract 
+    /*
     if(!this.controller.isMobile){ //NOT ON MOBILE
         this.expandBtn.addEventListener("click", () => {
           this.controller.handleExpandSelected();
@@ -219,5 +238,6 @@ export class MainContentView {
       this.expandBtn.classList.remove("hide");
       this.contractBtn.classList.add("hide");
     });
+    */
   }
 }

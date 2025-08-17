@@ -12,14 +12,19 @@ export class SidebarView{
         this.newListDialog = this.createDialog(); // Create the dialog and store it
         document.body.appendChild(this.newListDialog); // Append it to the body
         this.renderSidebar();
+        this.isVisible = true;
         this.setupEventListeners();
     }
-
+    // isVisible(){
+    //   return this.isVisible;
+    // }
     showSidebar(){
       this.sidebar.className = "sidebar";
+      this.isVisible = true;
     }
     hideSidebar(){
       this.sidebar.classList.add("closed");
+      this.isVisible = false;
     }
     
     renderSidebar(){

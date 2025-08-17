@@ -6,7 +6,16 @@
   position: relative;
   overflow: hidden;
 }
-
+#manage-display{
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer; /* Show pointer cursor on hover */
+}
+.material-symbols-outlined.large-icon.expand-contract {
+  font-size: 64px;
+}
 .sidebar {
   flex: 0 0 25vw;
   transition: transform 0.3s ease, flex-basis 0.3s ease;
@@ -72,11 +81,10 @@
   flex: 1 1 auto; /* take remaining space */
   overflow-y: auto; /* scroll if content is long */
 }
+
 .main-bottom {
   flex-shrink: 0; /* do not shrink */
-  /* optionally add background, padding, border */
   margin-bottom: 2rem;
-  /* color */
 }
 .hide {
   display: none;
@@ -282,10 +290,20 @@ transform: translateX(0);
 display: none;
 }
 .main {
+  display: grid;
+  grid-template-rows: 1fr auto; /* The first row takes up all available space (1fr), and the second row (for addtask) takes up only as much space as it needs (auto) */
+  height: 100vh; /* Set a specific height for the grid container to work properly */
+  box-sizing: border-box;
   padding: 1rem;
-  width: 100%; /* Ensure main container fits within viewport */
-  box-sizing: border-box; /* Include padding in the element's total width */
 }
+.main-content {
+  overflow-y: auto; /* Enable scrolling for the task list if it overflows */
+}
+.main-content .todo-collection {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* This will center the todo items horizontally */
+  }
 .main .todo {
   /* Use flexible units and percentages */
     width: 90%; /* Take up the full width of its parent (.main) */
@@ -300,12 +318,13 @@ display: none;
   font-size: 20px;
 }
 .main .addtask {
-    flex-direction: row; /* Stack the input and button vertically */
-    font-size: 1rem;
-    gap: 5px; /* Adjust gap for spacing */
-    padding: .5rem;
-    width: 100%; /* Ensure the addtask container takes up full width */
-    box-sizing: border-box;
+  margin-top: auto; /* Push the element to the bottom of the grid row */
+  align-self: end; /* Align it to the end of the grid cell */
+  flex-direction: row;
+  /* gap: 10px; */
+  width: 95%;
+  font-size: 1rem;
+  padding: .5rem;
   }
 
 .main .addtask .large-icon {
@@ -321,4 +340,7 @@ display: none;
     gap: 10px;
     font-size: 1.5rem; /* Adjust font size to fit */
   }
+.material-symbols-outlined.large-icon.expand-contract {
+  font-size: 36px;
+}
 }
