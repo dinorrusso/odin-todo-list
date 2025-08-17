@@ -1,0 +1,203 @@
+.profile {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  color: var(--sidebar-text);
+}
+.profile > .avatar {
+  margin-right: 10px;
+}
+.profile .profile-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.addlist {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.25rem;
+  color: var(--addlist);
+  border-radius: 10px;
+}
+.addlist > .material-symbols-outlined {
+  font-size: 36px;
+  margin-right: 1rem;
+}
+.detail-panel .detail-bottom button#close-detail,
+.detail-panel .detail-bottom button#delete-todo {
+  background: transparent;
+  border: none;
+  color: rgb(127, 127, 127);
+  padding: 10px 20px; /* Create enough padding space around the text for easy clicking */
+  /* cursor: pointer;  */
+  width: auto;
+  height: auto;
+}
+
+.todo {
+  display: grid;
+  grid-template-columns: 50px 1fr 50px 50px;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: var(--main-task-color);
+  font-size: 1.25rem;
+  color: var(--main-task-text-color);
+  border-radius: 10px;
+  padding: 20px;
+}
+.todo.selected {
+  border: 4px solid var(--todo-selection-border); /* thickness, style, color */
+}
+
+.todo > .material-symbols-outlined {
+  font-size: 36px;
+  margin-right: 24px;
+  cursor: pointer;
+
+}
+.task-list-header {
+  display: grid;
+  grid-template-columns: 1fr 4rem;
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.task-list-header > .material-symbols-outlined.large-icon.hide {
+  cursor: none;
+  display: none;
+}
+.task-list-header > .material-symbols-outlined.large-icon {
+  cursor: pointer;
+  display:block;
+}
+
+.addtask {
+  display: flex;
+  align-items: center;
+  /* margin-left: 2rem;
+  margin-right: 2rem; */
+  margin-bottom: 1.5rem;
+  background: var(--add-task-bg-color);
+  font-size: 24px;
+  color: var(--add-task-text-color);
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+}
+.addtask > .material-symbols-outlined {
+  font-size: 36px;
+  
+}
+
+.main-content button#expand,
+.main-content button#contract {
+  background: transparent;
+  border: none;
+  width: 2rem;
+  color: white;
+  cursor: pointer; /* Show pointer cursor on hover */
+
+}
+.main-content button#expand span.material-symbols-outlined.large-icon,
+.main-content button#contract span.material-symbols-outlined.large-icon {
+  font-size: 2.5rem;
+}
+.custom-hr {
+  border: none;
+  height: 3px;
+  background: #c2c2c1;
+  margin: 10px 0;
+  border-radius: 1.5px;
+  margin-left: 1rem;
+  width: 90%;
+}
+.addlist {
+  cursor: pointer;
+}
+dialog {
+  border: none;                /* Remove default border */
+  border-radius: 8px;          /* Rounded corners */
+  padding: 20px 30px;          /* Space inside the dialog */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  width: 300px;                /* Fixed width */
+  max-width: 90vw;             /* Responsive on small screens */
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);  /* Semi-transparent dark overlay behind dialog */
+  -webkit-backdrop-filter: blur(2px); /* Safari support */
+  backdrop-filter: blur(2px);       
+}
+
+dialog form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+dialog input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline-offset: 2px;
+}
+
+dialog button {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #5467ae;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+dialog button:hover {
+  background-color: #5467ae;
+}
+
+dialog button.cancel-btn {
+  background-color: #e74c3c;
+}
+
+dialog button.cancel-btn:hover {
+  background-color: #c0392b;
+}
+.task-list-title[contenteditable="true"]:focus {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  outline: none; /* Removes the default focus outline */
+  filter: invert(100%);
+  /* background: #234460; */
+}
+.filled-icon {
+  font-variation-settings: "FILL" 1;
+  color: red;
+}
+#edit-list-name {
+  color: white;
+}
+input[type="date"] {
+  padding: 8px 12px;
+  border: 1px solid #666;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #222;
+  background-color: #f9f9f9;
+}
+input[type="date"].transparent-date {
+  opacity: 0;
+  position: absolute;
+  left: 0; top: 0;
+  width: 2px; height: 2px;
+  z-index: -1;
+}
