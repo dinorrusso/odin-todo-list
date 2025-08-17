@@ -127,6 +127,7 @@ export class MainContentView {
         console.log('addtasks:', addTasks);
         addTasks.style.visibility = 'hidden';
         if(activeTodoListName === "Tasks"){
+          console.log('adding visible to tasks')
           addTasks.style.visibility = 'visible';
         }
         break;
@@ -227,22 +228,5 @@ export class MainContentView {
     this.mainContentDisplayButton.addEventListener("click", () => {
         this.controller.handleExpandSelected();
     });
-
-
-    // events for making task list expand/contract 
-    /*
-    if(!this.controller.isMobile){ //NOT ON MOBILE
-        this.expandBtn.addEventListener("click", () => {
-          this.controller.handleExpandSelected();
-          this.expandBtn.classList.add("hide");
-          this.contractBtn.classList.remove("hide");
-        });
-    }
-    this.contractBtn.addEventListener("click", () => {
-      this.controller.handleContractSelected();
-      this.expandBtn.classList.remove("hide");
-      this.contractBtn.classList.add("hide");
-    });
-    */
   }
 }
