@@ -114,6 +114,7 @@ export class MainContentView {
       this.addTodoItemToView(item);
     });
     //control which task list names can be edited
+    const addTasks = document.querySelector('.addtask');
     switch (activeTodoListName) {
       //not editable
       case "My Day":
@@ -122,13 +123,14 @@ export class MainContentView {
       case "Tasks":
         console.log('in case: name:', activeTodoListName);
         this.actionDiv.className = "material-symbols-outlined large-icon hide";
-        const addTasks = document.querySelector('.addtask')
+
         console.log('addtasks:', addTasks);
         addTasks.style.visibility = 'hidden';
         break;
       default:
         //editable
         this.actionDiv.className = "material-symbols-outlined large-icon";
+        addTasks.style.visibility = 'visible';
         break;
     }
 
