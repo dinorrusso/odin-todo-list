@@ -127,7 +127,7 @@ export class MainContentView {
         console.log('addtasks:', addTasks);
         addTasks.style.visibility = 'hidden';
         if(activeTodoListName === "Tasks"){
-          console.log('adding visible to tasks')
+          console.log('adding visible to tasks');
           addTasks.style.visibility = 'visible';
         }
         break;
